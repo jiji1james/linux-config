@@ -13,6 +13,24 @@ esac
 # Figure out the arch
 unameArch="$(uname -m)"
 
+# Print Status Block
+function printEnvironmentStatus {
+	echo "---------------------------------------"
+	lsb_release -a
+	echo "---------------------------------------"
+	echo "Machine:        $unameMachine"
+	echo "Arch:           $unameArch"
+	echo "SHELL:          $(which $SHELL)"
+	echo "Container:      $CONTAINER_RUNTIME"
+	echo "Java:           $JAVA_HOME"
+	echo "---------------------------------------"
+	echo "Start Up:       $(uptime -s)"
+	echo "Nameserver:     $HOST_IP"
+	echo "WSL IP:         $WSL_IP"
+	echo "Date:           $(date)"
+	echo "---------------------------------------"
+}
+
 # Delete all Git Branches except master and develop
 function gitCleanBranches {
     echo "Branches to delete:"
@@ -57,7 +75,7 @@ function gw {
 # Set Java Home
 function setJavaHome {
 	version=$1
-	if [[ -z version ]]
+	if [[ -z $version ]]
 	then
 		version = "8"
 	fi
@@ -66,6 +84,19 @@ function setJavaHome {
 
 	echo ">>> Java Home set as $JAVA_HOME"
 	export PATH="$JAVA_HOME/bin:$OLD_PATH"
+}
+
+# Set Container Runtime
+function setContainerRuntime {
+	runtime=$1
+	if [[ -z $runtime ]]
+	then
+		runtime="podman"
+	fi
+
+	export CONTAINER_RUNTIME=$runtime
+
+	echo ">>> Container runtime set as $CONTAINER_RUNTIME"
 }
 
 # Sql Server Docker
@@ -92,12 +123,14 @@ function runPostgresServer {
 		containerVersion='develop'
 	fi
 	contianerName="dm-postgres-$containerVersion"
-	
+
 	echo ">>> Deleting running contianer: $contianerName"
-	docker rm -f $contianerName
+	command="$CONTAINER_RUNTIME rm -f $contianerName"
+	eval $command
 
 	echo ">>> Running Postgres Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-postgres:$containerVersion"
-	docker run -d --name $contianerName -p 5432:5432 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-postgres:$containerVersion
+	command="$CONTAINER_RUNTIME run -d --name $contianerName -p 5432:5432 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-postgres:$containerVersion"
+	eval $command
 }
 
 # Apache ArtemisMQ Docker
@@ -105,15 +138,17 @@ function runArtemis {
 	containerVersion=$1
 	if [[ -z $containerVersion ]]
 	then
-		containerVersion='2023.9.0'
+		containerVersion='2023.9.1'
 	fi
 	contianerName="dm-mq-$containerVersion"
 	
 	echo ">>> Deleting running contianer: $contianerName"
-	docker rm -f $contianerName
+	command="$CONTAINER_RUNTIME rm -f $contianerName"
+	eval $command
 
 	echo ">>> Running Artemis Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-activemq-artemis:$containerVersion"
-	docker run -d --name $contianerName -p 5432:5432 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-postgres:$containerVersion
+	command="$CONTAINER_RUNTIME run -d --name $contianerName -p 8161:8161 -p 61616:61616 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-activemq-artemis:$containerVersion"
+	eval $command
 }
 
 # Apache Httpd Docker
@@ -126,10 +161,12 @@ function runHttpd {
     containerName="dm-httpd-$containerVersion"
 
     echo ">>> Deleting running container: $containerName"
-    docker rm -f $containerName
+    command="$CONTAINER_RUNTIME rm -f $contianerName"
+	eval $command
 
     echo ">>> Running httpd Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-httpd:$containerVersion"
-	docker run -d --name $containerName -p 8080:80 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-httpd:$containerVersion
+	command="$CONTAINER_RUNTIME run -d --name $containerName -p 8080:80 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-httpd:$containerVersion"
+	eval $command
 }
 
 function listEcrImages {

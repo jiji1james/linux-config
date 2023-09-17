@@ -8,6 +8,7 @@ export JAVA_HOME='/home/james/java/jdk8'
 export TOOLS_HOME='/home/james/tools'
 export ANT_HOME="$TOOLS_HOME/apache-ant-1.9.16"
 export MVN_HOME="$TOOLS_HOME/apache-maven-3.9.3"
+export CONTAINER_RUNTIME="podman"
 
 # Add tools to path
 export OLD_PATH="$ANT_HOME/bin:$MVN_HOME/bin:$PATH"
@@ -47,15 +48,6 @@ if [[ -f "$HOME/linux-config/git-prompt.sh" ]]; then
     export PS1='\n\e[0;32m\W\e[m\e[0;33m$(__git_ps1 " (%s)")\e[m @ \e[0;36m$WSL_IP\e[m\n> '
 fi
 
-echo "---------------------------------------"
-lsb_release -a
-echo "---------------------------------------"
-echo "Machine:        $unameMachine"
-echo "Arch:           $unameArch"
-echo "SHELL:          $(which $SHELL)"
-echo "---------------------------------------"
-echo "Start Up:       $(uptime -s)"
-echo "Nameserver:     $HOST_IP"
-echo "WSL IP:         $WSL_IP"
-echo "---------------------------------------"
+# Print a block of env values
+printEnvironmentStatus
 
