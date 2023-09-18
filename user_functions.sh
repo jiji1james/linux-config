@@ -109,10 +109,12 @@ function runSqlServer {
 	contianerName="dm-sqlserver-$containerVersion"
 
 	echo ">>> Deleting running contianer: $contianerName"
-	docker rm -f $contianerName
+	command="$CONTAINER_RUNTIME rm -f $contianerName"
+	eval $command
 
 	echo ">>> Running SqlServer Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-sqlserver:$containerVersion"
-	docker run -d --name $contianerName --platform linux/amd64 -p 1433:1433 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-sqlserver:$containerVersion
+	command="$CONTAINER_RUNTIME run -d --name $contianerName --platform linux/amd64 -p 1433:1433 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-sqlserver:$containerVersion"
+	eval $command
 }
 
 # Postgres Docker
