@@ -1,9 +1,29 @@
 #!/usr/bin/env bash
 
-# Update the apt package list.
-sudo apt update -y
-sudo apt install -y zip unzip dos2unix htop
+# Figure out if this is fedora/ubuntu
+source /etc/os-release
+echo ">>>> Linux OS Release: $PRETTY_NAME"
 
+# Set Flags
+if [[ $PRETTY_NAME == *"Ubuntu"* ]]; then
+	export IS_UBUNTU=true
+	export IS_FEDORA=false
+elif [[ $PRETTY_NAME == *"Fedora"* ]]; then
+	export IS_FEDORA=true
+	export IS_UBUNTU=false
+fi
+
+# Update the apt package list.
+if $IS_UBUNTU; then
+	sudo apt update -y
+	sudo apt install -y zip unzip dos2unix htop git
+elif $IS_FEDORA; then
+	sudo dnf upgrade
+	sudo dnf install -y zip unzip dos2unix htop git 
+	sudo dnf install -y dnf-plugins-core
+	sudo dnf copr enable -y kopfkrieg/diff-so-fancy
+	sudo dnf install -y diff-so-fancy
+fi
 
 # Git Configuration
 echo ""
@@ -16,6 +36,21 @@ if [[ "$gitconfirm" == "Y" ]]; then
 else
 	echo ">>>> Skip Git Configuration"
 fi
+
+git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
+git config --global color.ui true
+
+git config --global color.diff-highlight.oldNormal    "red bold"
+git config --global color.diff-highlight.oldHighlight "red bold 52"
+git config --global color.diff-highlight.newNormal    "green bold"
+git config --global color.diff-highlight.newHighlight "green bold 22"
+
+git config --global color.diff.meta       "11"
+git config --global color.diff.frag       "magenta bold"
+git config --global color.diff.commit     "yellow bold"
+git config --global color.diff.old        "red bold"
+git config --global color.diff.new        "green bold"
+git config --global color.diff.whitespace "red reverse"
 
 if [[ -f "$HOME/.ssh/id_ed25519" ]]; then
 	echo ">>>> SSH keys are already present, skipping"
@@ -73,12 +108,14 @@ fi
 # Add Zscalar certs
 echo ""
 echo ">>>> Configuring Zscalar certificate, if present"
-if [[ "$(uname -s)" == "Linux" ]] && [[ -f "/mnt/c/Users/JijiJames/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" ]]; then
-	echo ">>> Adding ZscalarRootCA to the certs"
-	sudo apt install -y ca-certificates
-	rm -f /usr/local/share/ca-certificates/ZscalerRootCA.crt
-	sudo cp '/mnt/c/Users/JijiJames/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt' /usr/local/share/ca-certificates
-	sudo update-ca-certificates
+if $IS_UBUNTU; then
+	if [[ -f "/mnt/c/Users/JijiJames/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" ]]; then
+		echo ">>> Adding ZscalarRootCA to the certs"
+		sudo apt install -y ca-certificates
+		rm -f /usr/local/share/ca-certificates/ZscalerRootCA.crt
+		sudo cp '/mnt/c/Users/JijiJames/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt' /usr/local/share/ca-certificates
+		sudo update-ca-certificates
+	fi
 fi
 
 
