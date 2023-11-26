@@ -35,67 +35,45 @@ if [[ "$gitconfirm" == "Y" ]]; then
 	read -p "Git User Email (firstlastname@crsoftware.com): " gitemail
 	git config --global user.name "$gitname"
 	git config --global user.email "$gitemail"
+
+	git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
+	git config --global color.ui true
+
+	git config --global color.diff-highlight.oldNormal    "red bold"
+	git config --global color.diff-highlight.oldHighlight "red bold 52"
+	git config --global color.diff-highlight.newNormal    "green bold"
+	git config --global color.diff-highlight.newHighlight "green bold 22"
+
+	git config --global color.diff.meta       "11"
+	git config --global color.diff.frag       "magenta bold"
+	git config --global color.diff.commit     "yellow bold"
+	git config --global color.diff.old        "red bold"
+	git config --global color.diff.new        "green bold"
+	git config --global color.diff.whitespace "red reverse"
 else
 	echo ">>>> Skip Git Configuration"
 fi
 
-git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
-git config --global color.ui true
-
-git config --global color.diff-highlight.oldNormal    "red bold"
-git config --global color.diff-highlight.oldHighlight "red bold 52"
-git config --global color.diff-highlight.newNormal    "green bold"
-git config --global color.diff-highlight.newHighlight "green bold 22"
-
-git config --global color.diff.meta       "11"
-git config --global color.diff.frag       "magenta bold"
-git config --global color.diff.commit     "yellow bold"
-git config --global color.diff.old        "red bold"
-git config --global color.diff.new        "green bold"
-git config --global color.diff.whitespace "red reverse"
-
-if [[ -f "$HOME/.ssh/id_ed25519" ]]; then
-	echo ">>>> SSH keys are already present, skipping"
-else
-	mkdir -p $HOME/.ssh
-	cp -r /mnt/c/Users/JijiJames/config/ssh/id_ed25519* $HOME/.ssh
-	dos2unix $HOME/.ssh/id_ed25519*
-	chmod 600 $HOME/.ssh/id_ed25519*
-
-	echo ">>>> SSH keys copied"
-fi
-
-
-# Linux SHELL Configuration
-SHELL_NAME="bash"
-SHELL_FILE="$HOME/.bashrc"
-CURRENT_SHELL=$(which $SHELL)
-
-if [[ $CURRENT_SHELL == *"bash" ]]; then
-    SHELL_NAME="bash"
-    SHELL_FILE="$HOME/.bashrc"
-elif [[ $CURRENT_SHELL == *"zsh" ]]; then
-    SHELL_NAME="zsh"
-    SHELL_FILE="$HOME/.zshrc"
-else
-    echo ">>> Unknown $CURRENT_SHELL"
-fi
-
 echo ""
-echo ">>>> Configuring Shell environment for $CURRENT_SHELL using configuration file $SHELL_FILE"
+read -p "Copy ssh keys (id_ed25519) from Windows? (Y/N): " winconfirm
+if [[ "$gitconfirm" == "Y" ]]; then
+	if [[ -f "$HOME/.ssh/id_ed25519" ]]; then
+		echo ">>>> SSH keys are already present, skipping"
+	else
+		read -p "Windows home folder name (The name is case sensitive): " winhome
+		mkdir -p $HOME/.ssh
+		cp -r /mnt/c/Users/$winhome/config/ssh/id_ed25519* $HOME/.ssh
+		dos2unix $HOME/.ssh/id_ed25519*
+		chmod 600 $HOME/.ssh/id_ed25519*
+
+		echo ">>>> SSH keys copied"
+	fi
+else
+	echo ">>>> Skip ssh keys setup from windows"
+fi
 
 # Install fzf
 sudo apt-get install -y fzf
-if ! grep -q "# Load fzf configuration" "$SHELL_FILE"; then
-    echo "" >> $SHELL_FILE
-    echo "# Load fzf configuration" >> $SHELL_FILE
-    echo "source /usr/share/doc/fzf/examples/key-bindings.$SHELL_NAME" >> $SHELL_FILE
-    if [[ $SHELL_NAME = "zsh" ]]; then
-        echo "source /usr/share/doc/fzf/examples/completion.$SHELL_NAME" >> $SHELL_FILE
-    fi
-else
-    echo ">>>> FZF config already present in $SHELL_FILE"
-fi
 
 # Add homebrew
 if $IS_UBUNTU; then
@@ -120,11 +98,14 @@ fi
 echo ""
 echo ">>>> Configuring Zscalar certificate, if present"
 if $IS_UBUNTU; then
-	if [[ -f "/mnt/c/Users/JijiJames/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" ]]; then
+	if [[ -z $winhome ]]; then
+		read -p "Windows home folder name (The name is case sensitive): " winhome
+	fi
+	if [[ -f "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" ]]; then
 		echo ">>> Adding ZscalarRootCA to the certs"
 		sudo apt install -y ca-certificates
 		rm -f /usr/local/share/ca-certificates/ZscalerRootCA.crt
-		sudo cp '/mnt/c/Users/JijiJames/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt' /usr/local/share/ca-certificates
+		sudo cp "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" /usr/local/share/ca-certificates
 		sudo update-ca-certificates
 	fi
 fi

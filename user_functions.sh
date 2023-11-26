@@ -99,6 +99,15 @@ function setContainerRuntime {
 	echo ">>> Container runtime set as $CONTAINER_RUNTIME"
 }
 
+# Login to ECR
+function ecr-login {
+	command="aws ecr get-login-password --region us-east-1 | $CONTAINER_RUNTIME  login --username AWS --password-stdin 828586629811.dkr.ecr.us-east-1.amazonaws.com"
+
+	echo ">>> Attempting ECR login using command $command"
+	eval $command
+}
+
+
 # Sql Server Docker
 function runSqlServer {
 	containerVersion=$1

@@ -14,9 +14,6 @@ export CONTAINER_RUNTIME="podman"
 export OLD_PATH="$ANT_HOME/bin:$MVN_HOME/bin:$PATH"
 export PATH="$JAVA_HOME/bin:$OLD_PATH"
 
-alias ecr-docker-login='aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 828586629811.dkr.ecr.us-east-1.amazonaws.com'
-alias ecr-podman-login='aws ecr get-login-password --region us-east-1 | podman login --username AWS --password-stdin 828586629811.dkr.ecr.us-east-1.amazonaws.com'
-
 alias wsl-ip-addr="ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'"
 alias wsl-internet='echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf'
 alias check-systemd="systemctl list-units --type=service"
