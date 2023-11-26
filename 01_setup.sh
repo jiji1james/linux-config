@@ -96,18 +96,17 @@ fi
 
 # Add Zscalar certs
 echo ""
-echo ">>>> Configuring Zscalar certificate, if present"
-if $IS_UBUNTU; then
-	if [[ -z $winhome ]]; then
-		read -p "Windows home folder name (The name is case sensitive): " winhome
-	fi
-	if [[ -f "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" ]]; then
-		echo ">>> Adding ZscalarRootCA to the certs"
-		sudo apt install -y ca-certificates
-		rm -f /usr/local/share/ca-certificates/ZscalerRootCA.crt
-		sudo cp "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" /usr/local/share/ca-certificates
-		sudo update-ca-certificates
+read -p "Configure Zscalar certificate? (Y/N): " zconfirm
+if [[ "$zconfirm" == "Y" ]] && [[ ! -f /usr/local/share/ca-certificates/ZscalerRootCA.crt ]]; then
+	if $IS_UBUNTU; then
+		if [[ -z $winhome ]]; then
+			read -p "Windows home folder name (The name is case sensitive): " winhome
+		fi
+		if [[ -f "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" ]]; then
+			echo ">>> Adding ZscalarRootCA to the certs"
+			sudo apt install -y ca-certificates
+			sudo cp "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" /usr/local/share/ca-certificates
+			sudo update-ca-certificates
+		fi
 	fi
 fi
-
-
