@@ -17,6 +17,8 @@ fi
 if $IS_UBUNTU; then
 	sudo apt update -y
 	sudo apt install -y zip unzip dos2unix htop git
+	# Install homebrew
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 elif $IS_FEDORA; then
 	sudo dnf upgrade
 	sudo dnf install -y zip unzip dos2unix htop git 
@@ -93,6 +95,15 @@ if ! grep -q "# Load fzf configuration" "$SHELL_FILE"; then
     fi
 else
     echo ">>>> FZF config already present in $SHELL_FILE"
+fi
+
+# Add homebrew
+if $IS_UBUNTU; then
+	test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+	test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+	echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
+
+	brew install diff-so-fancy
 fi
 
 # Add alias file
