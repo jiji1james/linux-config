@@ -21,7 +21,7 @@ if $IS_UBUNTU; then
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 elif $IS_FEDORA; then
 	sudo dnf upgrade
-	sudo dnf install -y zip unzip dos2unix htop git 
+	sudo dnf install -y zip unzip dos2unix htop git fzf
 	sudo dnf install -y dnf-plugins-core
 	sudo dnf copr enable -y kopfkrieg/diff-so-fancy
 	sudo dnf install -y diff-so-fancy
