@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
 
 files=(
-    ".gitconfig"
-    ".bash_profile"
-    ".bashrc"
     ".ideavimrc"
     ".vimrc"
-    ".gitconfig"
     ".gitattributes"
     ".gitignore"
 )

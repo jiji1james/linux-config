@@ -31,7 +31,7 @@ set number
 set cursorline
 
 " Highlight cursor line underneath the cursor vertically.
-set cursorcolumn
+" set cursorcolumn
 
 " Set shift width to 4 spaces.
 set shiftwidth=4
@@ -91,9 +91,22 @@ set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
 " PLUGINS ---------------------------------------------------------------- {{{
 
+" https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
+
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
 call plug#begin()
-	" https://github.com/justinmk/vim-sneak
-	Plug 'justinmk/vim-sneak'
+    " https://github.com/easymotion/vim-easymotion
+    Plug 'easymotion/vim-easymotion'
 
 	" https://github.com/junegunn/vim-easy-align
 	Plug 'junegunn/vim-easy-align'
@@ -152,6 +165,30 @@ nnoremap <F3> :NERDTreeToggle<cr>
 
 " Have nerdtree ignore certain files and directories.
 let NERDTreeIgnore=['\.git$', '\.jpg$', '\.mp4$', '\.ogg$', '\.iso$', '\.pdf$', '\.pyc$', '\.odt$', '\.png$', '\.gif$', '\.db$']
+
+" }}}
+
+" EASY MOTION CONIFG ----------------------------------------------------- {{{
+
+" Check https://github.com/easymotion/vim-easymotion#minimal-configuration-tutorial
+
+" Disable default mappings
+let g:EasyMotion_do_mapping = 0 
+
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+nmap s <Plug>(easymotion-overwin-f)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Turn on case-insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
 
 " }}}
 

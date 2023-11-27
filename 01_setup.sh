@@ -16,12 +16,12 @@ fi
 # Update the apt package list.
 if $IS_UBUNTU; then
 	sudo apt update -y
-	sudo apt install -y zip unzip dos2unix htop git
+	sudo apt install -y zip unzip dos2unix htop git fzf autojump
 	# Install homebrew
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 elif $IS_FEDORA; then
 	sudo dnf upgrade
-	sudo dnf install -y zip unzip dos2unix htop git fzf
+	sudo dnf install -y zip unzip dos2unix htop git fzf autojump
 	sudo dnf install -y dnf-plugins-core
 	sudo dnf copr enable -y kopfkrieg/diff-so-fancy
 	sudo dnf install -y diff-so-fancy
@@ -72,14 +72,43 @@ else
 	echo ">>>> Skip ssh keys setup from windows"
 fi
 
-# Install fzf
-sudo apt-get install -y fzf
+# Linux SHELL Configuration
+SHELL_NAME="bash"
+SHELL_FILE="$HOME/.bashrc"
+CURRENT_SHELL=$(which $SHELL)
+
+if [[ $CURRENT_SHELL == *"bash" ]]; then
+    SHELL_NAME="bash"
+    SHELL_FILE="$HOME/.bashrc"
+elif [[ $CURRENT_SHELL == *"zsh" ]]; then
+    SHELL_NAME="zsh"
+    SHELL_FILE="$HOME/.zshrc"
+else
+    echo ">>> Unknown $CURRENT_SHELL"
+fi
+
+# Add fzf completion
+if ! grep -q "# Load fzf configuration" "$SHELL_FILE"; then
+	echo "" >> $SHELL_FILE
+	echo "# Load fzf configuration" >> $SHELL_FILE
+	echo "source /usr/share/doc/fzf/examples/key-bindings.$SHELL_NAME" >> $SHELL_FILE
+	if [[ $SHELL_NAME = "zsh" ]]; then
+		echo "source /usr/share/doc/fzf/examples/completion.$SHELL_NAME" >> $SHELL_FILE
+	fi
+else
+	echo ">>>> FZF config already present in $SHELL_FILE"
+fi
 
 # Add homebrew
 if $IS_UBUNTU; then
 	test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
 	test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-	echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
+
+	if ! grep -q "# Homebrew" "$SHELL_FILE"; then
+		echo "" >> $SHELL_FILE
+		echo "# Homebrew" >> $SHELL_FILE
+		echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> $SHELL_FILE
+	fi
 
 	brew install diff-so-fancy
 fi
@@ -90,6 +119,7 @@ if ! grep -q "# Load user alias and functions" "$SHELL_FILE"; then
     echo "# Load user alias and functions" >> $SHELL_FILE
     echo "source $HOME/linux-config/user_functions.sh" >> $SHELL_FILE
     echo "source $HOME/linux-config/user_alias.sh" >> $SHELL_FILE
+	echo "source $HOME/linux-config/user_fzf_functions.sh" >> $SHELL_FILE
 else
     echo ">>>> User Alias already present in $SHELL_FILE"
 fi
@@ -109,4 +139,13 @@ if [[ "$zconfirm" == "Y" ]] && [[ ! -f /usr/local/share/ca-certificates/ZscalerR
 			sudo update-ca-certificates
 		fi
 	fi
+fi
+
+# Fix bash_profile file
+if [[ ! -f ~/.bash_profile ]]; then
+	touch ~/.bash_profile
+fi
+if ! grep -q "# Load .bashrc" "~/.bash_profile"; then
+	echo "# Load .bashrc" >> ~/.bash_profile
+	echo "if [ -r ~/.bashrc ]; then . ~/.bashrc; fi" >> ~/.bash_profile
 fi
