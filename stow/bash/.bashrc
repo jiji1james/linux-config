@@ -121,5 +121,5 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 source /usr/share/doc/fzf/examples/key-bindings.bash
 
 # Load user alias and functions
-source /home/james/linux-config/user_functions.sh
-source /home/james/linux-config/user_alias.sh
+source ~/linux-config/user_functions.sh
+source ~/linux-config/user_alias.sh
