@@ -8,7 +8,7 @@ export JAVA_HOME='/home/james/java/jdk8'
 export TOOLS_HOME='/home/james/tools'
 export ANT_HOME="$TOOLS_HOME/apache-ant-1.9.16"
 export MVN_HOME="$TOOLS_HOME/apache-maven-3.9.3"
-export CONTAINER_RUNTIME="podman"
+export CONTAINER_RUNTIME="docker"
 
 # Add tools to path
 export OLD_PATH="$ANT_HOME/bin:$MVN_HOME/bin:$PATH"
