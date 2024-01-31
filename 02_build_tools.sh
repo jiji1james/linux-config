@@ -11,82 +11,13 @@ sudo ./aws/install
 rm -rf $HOME/aws
 rm -f awscliv2.zip
 
-TOOLS_HOME="$HOME/tools"
-JAVA_INSTALL_HOME="$HOME/java"
+# Install SDKMAN
+curl -s "https://get.sdkman.io" | bash
+source $HOME/.sdkman/bin/sdkman-init.sh
 
-mkdir -p $JAVA_INSTALL_HOME
-cd $JAVA_INSTALL_HOME
+sdk install java 8.0.392-zulu
+sdk install java 11.0.21-zulu
+sdk install java 17.0.9-zulu
 
-JAVA_8_FULL_VERSION='8.372.07.1'
-JAVA_11_FULL_VERSION='11.0.19.7.1'
-JAVA_17_FULL_VERSION='17.0.7.7.1'
-
-function installCorrettoJava {
-    JAVA_FULL_VERSION=$1
-    JAVA_VERSION=$2
-
-    if [[ -z $JAVA_FULL_VERSION ]]
-    then
-        JAVA_FULL_VERSION=$JAVA_8_FULL_VERSION
-    fi
-
-    if [[ -z $JAVA_VERSION ]]
-    then
-        JAVA_VERSION="8"
-    fi
-
-    if [ ! -d "$JAVA_INSTALL_HOME/jdk$JAVA_VERSION" ]
-    then
-        JAVA_URL="https://corretto.aws/downloads/resources/$JAVA_FULL_VERSION/amazon-corretto-$JAVA_FULL_VERSION-linux-x64.tar.gz"
-        echo ">>> Install Corretto - $JAVA_FULL_VERSION from $JAVA_URL"
-
-        wget $JAVA_URL
-        tar -xvf amazon-corretto-$JAVA_FULL_VERSION-linux-x64.tar.gz
-        mv amazon-corretto-$JAVA_FULL_VERSION-linux-x64 jdk$JAVA_VERSION
-        rm -rf amazon-corretto-$JAVA_FULL_VERSION-linux-x64.tar.gz
-    else
-        echo ">>> Corretto $JAVA_FULL_VERSION already exists"
-    fi
-}
-
-echo ""
-echo ">>>> Installing Java"
-installCorrettoJava $JAVA_8_FULL_VERSION 8
-installCorrettoJava $JAVA_11_FULL_VERSION 11
-installCorrettoJava $JAVA_17_FULL_VERSION 17
-
-mkdir -p $TOOLS_HOME
-cd $TOOLS_HOME
-
-echo ""
-echo ">>>> Installing Maven"
-MVN_VERSION='3.9.4'
-if [ ! -d "apache-maven-$MVN_VERSION" ]
-then
-    MAVEN_URL="https://dlcdn.apache.org/maven/maven-3/$MVN_VERSION/binaries/apache-maven-$MVN_VERSION-bin.tar.gz"
-    echo ">>> Install Apache Maven - $MVN_VERSION from $MAVEN_URL"
-
-    curl -k $MAVEN_URL --output apache-maven-$MVN_VERSION-bin.tar.gz
-    tar -xvf apache-maven-$MVN_VERSION-bin.tar.gz
-    rm -f apache-maven-$MVN_VERSION-bin.tar.gz
-else
-    echo ">>> Apache Maven $MVN_VERSION already exists"
-fi
-
-echo ""
-echo ">>>> Installing ant"
-ANT_VERSION='1.9.16'
-if [ ! -d "apache-ant-$ANT_VERSION" ]
-then
-    ANT_URL="https://dlcdn.apache.org/ant/binaries/apache-ant-$ANT_VERSION-bin.tar.gz"
-    echo ">>> Install Apache Ant - $ANT_VERSION from $ANT_URL"
-
-    curl -k $ANT_URL --output apache-ant-$ANT_VERSION-bin.tar.gz
-    tar -xvf apache-ant-$ANT_VERSION-bin.tar.gz
-    rm -f apache-ant-$ANT_VERSION-bin.tar.gz
-else
-    echo ">>> Apache Ant $ANT_VERSION already exists"
-fi
-
-cd $cwd
-
+sdk install ant 1.9.15
+sdk install maven 3.9.6

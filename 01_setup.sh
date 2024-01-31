@@ -16,96 +16,13 @@ fi
 # Update the apt package list.
 if $IS_UBUNTU; then
 	sudo apt update -y
-	sudo apt install -y zip unzip dos2unix htop git fzf autojump
+	sudo apt install -y zip unzip dos2unix zsh htop git fzf autojump
 elif $IS_FEDORA; then
 	sudo dnf upgrade
 	sudo dnf install -y zip unzip dos2unix htop git fzf autojump
 	sudo dnf install -y dnf-plugins-core
 	sudo dnf copr enable -y kopfkrieg/diff-so-fancy
 	sudo dnf install -y diff-so-fancy
-fi
-
-# Git Configuration
-echo ""
-read -p "Configure Git? (Y/N): " gitconfirm
-if [[ "$gitconfirm" == "Y" ]]; then
-	read -p "Git User Name (Firstname Lastname): " gitname
-	read -p "Git User Email (firstlastname@crsoftware.com): " gitemail
-	git config --global user.name "$gitname"
-	git config --global user.email "$gitemail"
-
-	git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
-	git config --global color.ui true
-
-	git config --global color.diff-highlight.oldNormal    "red bold"
-	git config --global color.diff-highlight.oldHighlight "red bold 52"
-	git config --global color.diff-highlight.newNormal    "green bold"
-	git config --global color.diff-highlight.newHighlight "green bold 22"
-
-	git config --global color.diff.meta       "11"
-	git config --global color.diff.frag       "magenta bold"
-	git config --global color.diff.commit     "yellow bold"
-	git config --global color.diff.old        "red bold"
-	git config --global color.diff.new        "green bold"
-	git config --global color.diff.whitespace "red reverse"
-else
-	echo ">>>> Skip Git Configuration"
-fi
-
-echo ""
-read -p "Copy ssh keys (id_ed25519) from Windows? (Y/N): " winconfirm
-if [[ "$gitconfirm" == "Y" ]]; then
-	if [[ -f "$HOME/.ssh/id_ed25519" ]]; then
-		echo ">>>> SSH keys are already present, skipping"
-	else
-		read -p "Windows home folder name (The name is case sensitive): " winhome
-		mkdir -p $HOME/.ssh
-		cp -r /mnt/c/Users/$winhome/config/ssh/id_ed25519* $HOME/.ssh
-		dos2unix $HOME/.ssh/id_ed25519*
-		chmod 600 $HOME/.ssh/id_ed25519*
-
-		echo ">>>> SSH keys copied"
-	fi
-else
-	echo ">>>> Skip ssh keys setup from windows"
-fi
-
-# Linux SHELL Configuration
-SHELL_NAME="bash"
-SHELL_FILE="$HOME/.bashrc"
-CURRENT_SHELL=$(which $SHELL)
-
-if [[ $CURRENT_SHELL == *"bash" ]]; then
-    SHELL_NAME="bash"
-    SHELL_FILE="$HOME/.bashrc"
-elif [[ $CURRENT_SHELL == *"zsh" ]]; then
-    SHELL_NAME="zsh"
-    SHELL_FILE="$HOME/.zshrc"
-else
-    echo ">>> Unknown $CURRENT_SHELL"
-fi
-
-# Add fzf completion
-if ! grep -q "# Load fzf configuration" "$SHELL_FILE"; then
-	echo "" >> $SHELL_FILE
-	echo "# Load fzf configuration" >> $SHELL_FILE
-	echo "source /usr/share/doc/fzf/examples/key-bindings.$SHELL_NAME" >> $SHELL_FILE
-	if [[ $SHELL_NAME = "zsh" ]]; then
-		echo "source /usr/share/doc/fzf/examples/completion.$SHELL_NAME" >> $SHELL_FILE
-	fi
-else
-	echo ">>>> FZF config already present in $SHELL_FILE"
-fi
-
-# Add alias file
-if ! grep -q "# Load user alias and functions" "$SHELL_FILE"; then
-    echo "" >> $SHELL_FILE
-    echo "# Load user alias and functions" >> $SHELL_FILE
-    echo "source $HOME/linux-config/user_functions.sh" >> $SHELL_FILE
-    echo "source $HOME/linux-config/user_alias.sh" >> $SHELL_FILE
-	echo "source $HOME/linux-config/user_fzf_functions.sh" >> $SHELL_FILE
-else
-    echo ">>>> User Alias already present in $SHELL_FILE"
 fi
 
 # Add Zscalar certs

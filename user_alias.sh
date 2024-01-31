@@ -3,16 +3,13 @@
 alias zsh-source='source $HOME/.zshrc'
 alias bash-source='source $HOME/.bashrc'
 
-# Setup tools
-export JAVA_HOME='/home/james/java/jdk8'
-export TOOLS_HOME='/home/james/tools'
-export ANT_HOME="$TOOLS_HOME/apache-ant-1.9.16"
-export MVN_HOME="$TOOLS_HOME/apache-maven-3.9.3"
-export CONTAINER_RUNTIME="docker"
+alias ls='ls --color=auto'
+alias la='ls -A'
+alias ll='ls -alF'
+alias grep='grep --color=auto'
 
-# Add tools to path
-export OLD_PATH="$ANT_HOME/bin:$MVN_HOME/bin:$PATH"
-export PATH="$JAVA_HOME/bin:$OLD_PATH"
+# Setup tools
+export CONTAINER_RUNTIME="docker"
 
 alias wsl-ip-addr="ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'"
 alias wsl-internet='echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf'

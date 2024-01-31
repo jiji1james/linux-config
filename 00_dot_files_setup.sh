@@ -5,6 +5,7 @@ files=(
     ".vimrc"
     ".gitattributes"
     ".gitignore"
+    ".zshrc"
 )
 
 folders=(
