@@ -72,6 +72,20 @@ function gw {
 	eval $command
 }
 
+# Invoke gradle wrapper without cache
+function gwNoCache {
+	commad=""
+	if [ -f "./gradlew" ]; then
+		command="./gradlew $@"
+	elif [ -f "../gradlew" ]; then
+		command="../gradlew $@"
+	else
+		echo "Gradle Wrapper not found"
+	fi
+	echo ">>> Running: $command"
+	eval $command --no-build-cache
+}
+
 # Set Java Home
 function setJavaHome {
 	version=$1
