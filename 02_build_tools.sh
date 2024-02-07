@@ -15,9 +15,9 @@ rm -f awscliv2.zip
 curl -s "https://get.sdkman.io" | bash
 source $HOME/.sdkman/bin/sdkman-init.sh
 
-sdk install java 8.0.392-zulu
-sdk install java 11.0.21-zulu
-sdk install java 17.0.9-zulu
+sdk install java 8.0.402-zulu
+sdk install java 11.0.22-zulu
+sdk install java 21.0.2-zulu
 
 sdk install ant 1.9.15
 sdk install maven 3.9.6
