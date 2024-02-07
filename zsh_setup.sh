@@ -7,7 +7,7 @@ sudo apt install -y zsh
 # ZSH Setup
 # https://dev.to/hbenvenutti/using-zsh-without-omz-4gch
 ###################################################
-mkdir -p .zsh/plugins .zsh/themes
+mkdir ~/.zsh ~/.zsh/plugins ~/.zsh/themes
 rm ~/.zsh_history
 touch ~/.zsh/.zsh_history
 
