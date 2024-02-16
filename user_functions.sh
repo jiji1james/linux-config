@@ -24,8 +24,6 @@ unameArch="$(uname -m)"
 # Print Status Block
 function printEnvironmentStatus {
 	echo "---------------------------------------"
-	lsb_release -a
-	echo "---------------------------------------"
 	echo "Machine:        $unameMachine"
 	echo "Arch:           $unameArch"
 	echo "SHELL:          $(which $SHELL)"

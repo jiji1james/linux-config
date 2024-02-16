@@ -44,6 +44,8 @@ SPACESHIP_CHAR_SUFFIX=" "
 source ~/linux-config/user_functions.sh
 source ~/linux-config/user_alias.sh
 
+### ---- Autojump ----
+[[ -s "/usr/share/autojump/autojump.sh" ]] && source "/usr/share/autojump/autojump.sh"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
