@@ -1,5 +1,13 @@
 #!/usr/bin/env zsh
 
+# If not running interactively, don't do anything
+[[ "$-" != *i* ]] && return
+
+# Place private bin directories in the path
+if [ -e ${HOME}/bin ]; then
+	export PATH=${HOME}/bin:${PATH}
+fi
+
 # Figure out the machine
 unameMachine="$(uname -s)"
 case "${unameMachine}" in
@@ -206,4 +214,104 @@ function listEcrImages {
 	command="aws ecr describe-images --repository-name $repo_name --query 'reverse(sort_by(imageDetails,& imagePushedAt))[*]' | jq '.[:10] | .[] | select (.imageTags | .[] | contains(\"$search_text\")) | {repositoryName:.repositoryName, imageTags:.imageTags, imagePushedAt:.imagePushedAt, lastRecordedPullTime:.lastRecordedPullTime}'"
 	echo ">>> $command"
 	eval "$command"
+}
+
+# Short-hand for displaying configuration files without comments
+function show {
+	showFile=${1:?"${FUNCNAME[0]}: No file specified"}
+	if [ ! -f "$showFile" ]; then
+		echo "${FUNCNAME[0]}: No such file: $showFile" >&2
+		return 2
+	fi
+	egrep -v '^\s*$|^\s*(#|//|;)' $showFile | perl -ne 'print unless /\/\*/../\*\//' | perl -ne 'print unless /<!--/../-->/'
+}
+
+# Function to intelligently un-tar files without having to memorize all the
+# correct flags to tar.
+function untar {
+	local targetFile=${1:?"ERROR:  You must specify a file to untar!"}
+	local fileExt=${targetFile##*.}
+	local tarCommand=tar
+	local evalCommand
+
+	case $fileExt in
+		tar)        # Uncompressed
+			tarCommand="$tarCommand xvf"
+			;;
+		tgz|gz)     # GZip
+			tarCommand="$tarCommand xvfz"
+			;;
+		bz2)        # BZip2
+			tarCommand="$tarCommand xvfj"
+			;;
+		lgz|lz7|lz) # LZip
+			tarCommand="$tarCommand xvfJ"
+			;;
+		*)          # Unknown
+			echo "Unknown tar file extension: $fileExt" >&2
+			return 1
+	esac
+
+	shift
+	evalCommand="$tarCommand $targetFile $@"
+	echo $evalCommand
+	$evalCommand
+}
+
+# Function to intelligently zip resources without having to remember all the
+# necessary flags.
+function zip {
+	local zipTarget=${1:?"ERROR:  You must specify a resource to zip!"}
+	local zipFile=${zipTarget}.zip
+	local zipOpts=$ZIP_OPTS
+	local zipBin
+	local zipCommand
+
+	# Bail if zip has not been installed
+	zipBin=$(which zip)
+	if [ 0 -ne $? ]; then
+		zipBin=/usr/bin/zip
+		if [ ! -e $zipBin ]; then
+			zipBin=/usr/local/bin/zip
+			if [ ! -e $zipBin ]; then
+				zipBin=/bin/zip
+				if [ ! -e $zipBin ]; then
+					echo "ERROR:  No zip binary in the path!" >&2
+					return 1
+				fi
+			fi
+		fi
+	fi
+
+	# Pass all arguments to the actual zip binary if the first argument to this
+	# function is a flag.
+	if [ "-" = "${zipTarget:0:1}" ]; then
+		$zipBin $@
+		return $?
+	fi
+
+	# Bail if there's nothing to do
+	if [ ! -e "$zipTarget" ]; then
+		echo "ERROR:  $zipTarget does not exist." >&2
+		return 2
+	fi
+
+	# Update zip files that already exist
+	if [ -e "$zipFile" ]; then
+		zipOpts=${zipOpts}" --update"
+	fi
+
+	# Recursively zip directory targets
+	if [ -d "$zipTarget" ]; then
+		zipOpts=${zipOpts}" --recurse-paths"
+	fi
+
+	# Always verify the zip file and operate verbosely
+	zipOpts=${zipOpts}" --test --verbose"
+
+	# Perform the zip operation and return its exit state
+	zipCommand="$zipBin $zipOpts $zipFile $zipTarget"
+	echo $zipCommand
+	$zipCommand
+	return $?
 }

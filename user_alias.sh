@@ -1,12 +1,50 @@
 #!/usr/bin/env zsh
 
+# While the STANDARD width of a HORIZONTAL TAB is 5 SPACES, select key Linux
+# shell authors erroneously set this width to 8.  Over time, a comfortable NORM
+# of 4 spaces has been widely adopted by developers of most low-level languages
+# (c, c++, etc.).  We will also adopt 4-space tab widths.
+tabs 4
+
+# History Options
+# Don't put duplicate lines in the history.
+export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
+
+# Ignore some controlling instructions
+# HISTIGNORE is a colon-delimited list of patterns which should be excluded.
+# The '&' is a special pattern which suppresses duplicate entries.
+export HISTIGNORE=$'[ \t]*:&:[fb]g:exit:logout:ls:dir:clear'
+
 alias zsh-source='source $HOME/.zshrc'
 alias bash-source='source $HOME/.bashrc'
 
-alias ls='ls --color=auto'
-alias la='ls -A'
-alias ll='ls -alF'
-alias grep='grep --color=auto'
+# Default to human readable figures for common file-size reporting commands
+alias df='df -h'
+alias du='du -h'
+
+# Protect against accidental, all-too-easy file stomping
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# Liven up the console for common commands
+alias grep='grep --color'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+# Some shortcuts for different directory listings
+alias ls='ls -hF --color=tty'
+alias ll='ls -l --color=auto'
+alias la='ls -A --color=auto'
+
+# Make the prompt useful
+# export PS1='\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n\$ '
+
+# List directory names before file names like DOS
+alias dir='ls -lahF --color=tty --time-style=long-iso --group-directories-first'
+
+# Short-hand for a clean-screen directory listing
+alias clsd='clear; dir'
 
 # Setup tools
 export CONTAINER_RUNTIME="docker"

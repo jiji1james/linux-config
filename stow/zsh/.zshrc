@@ -31,7 +31,6 @@ SPACESHIP_PROMPT_ORDER=(
   hg            # Mercurial section (hg_branch  + hg_status)
   exec_time     # Execution time
   line_sep      # Line break
-  vi_mode       # Vi-mode indicator
   jobs          # Background jobs indicator
   exit_code     # Exit code section
   char          # Prompt character
@@ -42,8 +41,8 @@ SPACESHIP_CHAR_SYMBOL="❯"
 SPACESHIP_CHAR_SUFFIX=" "
 
 ### ---- PLUGINS & THEMES ----
-source ~/linux-config/user_alias.sh
 source ~/linux-config/user_functions.sh
+source ~/linux-config/user_alias.sh
 
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
