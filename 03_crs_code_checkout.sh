@@ -29,6 +29,12 @@ function checkoutGitRepository {
     echo ""
 }
 
+mkdir -p $HOME/crs/cos
+checkoutGitRepository callout-service $HOME/crs/cos
+
+mkdir -p $HOME/crs/comm
+checkoutGitRepository cnr-comm-service $HOME/crs/comm
+
 checkoutGitRepository crsj2ee $HOME/debtmanager/cloud
 checkoutGitRepository browser-client $HOME/debtmanager/cloud
 checkoutGitRepository db-postgres $HOME/debtmanager/cloud
@@ -48,6 +54,3 @@ checkoutGitRepository db-sqlserver $HOME/debtmanager/onprem
 checkoutGitRepository dm-tomcat $HOME/debtmanager
 checkoutGitRepository dm-jboss $HOME/debtmanager
 checkoutGitRepository dm-activemq-artemis $HOME/debtmanager
-
-mkdir -p $HOME/crs/cos
-checkoutGitRepository callout-service $HOME/crs/cos

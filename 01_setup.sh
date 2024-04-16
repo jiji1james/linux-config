@@ -60,5 +60,11 @@ if [[ "$zconfirm" == "Y" ]]; then
 			sudo cp "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" /usr/share/pki/trust/anchors/ZscalerRootCA.crt
 			sudo update-ca-certificates
 		fi
+	elif $IS_FEDORA && [[ ! -f /etc/pki/ca-trust/source/anchors/ZscalerRootCA.crt ]]; then
+		if [[ -f "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" ]]; then
+			echo ">>> Adding ZscalarRootCA to the certs"
+			sudo cp "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" /etc/pki/ca-trust/source/anchors/ZscalerRootCA.crt
+			sudo update-ca-trust
+		fi
 	fi
 fi

@@ -13,7 +13,7 @@ let mapleader = ","
 
 """ Common VIM settings ------------------
 set number
-set relativenumber
+"set relativenumber
 set showmode
 
 """ Idea specific settings ------------------
