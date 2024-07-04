@@ -63,11 +63,6 @@ alias onprem='cd $HOME/debtmanager/onprem'
 alias tomcat='cd $HOME/debtmanager/dm-tomcat/apache-tomcat'
 alias jboss='cd $HOME/debtmanager/dm-jboss/jboss-eap'
 
-# AWS CLI
-export AWS_ACCESS_KEY_ID="AKIA4B244TKZRBOHNE4L"
-export AWS_SECRET_ACCESS_KEY="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"
-export AWS_DEFAULT_REGION="us-east-1"
-
 # Bash PS1 config
 if [[ -f "$HOME/linux-config/git-prompt.sh" ]]; then
     source $HOME/linux-config/git-prompt.sh

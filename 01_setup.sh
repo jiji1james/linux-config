@@ -24,11 +24,11 @@ fi
 if $IS_UBUNTU; then
 	echo ">>> Install Ubuntu Packages"
 	sudo apt update -y
-	sudo apt install -y zip unzip dos2unix zsh htop git fzf autojump
+	sudo apt install -y zip unzip dos2unix zsh htop git fzf autojump zsh
 elif $IS_FEDORA; then
 	echo ">>> Install Fedora Packages"
 	sudo dnf upgrade
-	sudo dnf install -y zip unzip dos2unix htop git fzf autojump
+	sudo dnf install -y zip unzip dos2unix htop git fzf autojump zsh
 	sudo dnf install -y dnf-plugins-core
 	sudo dnf copr enable -y kopfkrieg/diff-so-fancy
 	sudo dnf install -y diff-so-fancy
@@ -43,7 +43,7 @@ fi
 # Add Zscalar certs
 echo ""
 read -p "Configure Zscalar certificate? (Y/N): " zconfirm
-if [[ -z $winhome ]]; then
+if [[ "$zconfirm" == "Y" ]] && [[ -z $winhome ]]; then
 	read -p "Windows home folder name (The name is case sensitive): " winhome
 fi
 if [[ "$zconfirm" == "Y" ]]; then

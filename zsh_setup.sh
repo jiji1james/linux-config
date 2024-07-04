@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 # Install ZSH
-sudo apt install -y zsh
+# sudo apt install -y zsh
+# sudo dnf install -y zsh
 
 ###################################################
 # ZSH Setup
