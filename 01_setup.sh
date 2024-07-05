@@ -24,11 +24,11 @@ fi
 if $IS_UBUNTU; then
 	echo ">>> Install Ubuntu Packages"
 	sudo apt update -y
-	sudo apt install -y zip unzip dos2unix zsh htop git autojump zsh
+	sudo apt install -y zip unzip dos2unix zsh htop git autojump zsh jq
 elif $IS_FEDORA; then
 	echo ">>> Install Fedora Packages"
 	sudo dnf upgrade
-	sudo dnf install -y zip unzip dos2unix htop git autojump zsh
+	sudo dnf install -y zip unzip dos2unix htop git autojump zsh jq
 	sudo dnf install -y dnf-plugins-core
 	sudo dnf copr enable -y kopfkrieg/diff-so-fancy
 	sudo dnf install -y diff-so-fancy
@@ -37,7 +37,7 @@ elif $IS_SUSE; then
 	sudo zypper ref
 	sudo zypper list-updates --all
 	sudo zypper -n update
-	sudo zypper -n install zip unzip dos2unix htop git autojump diff-so-fancy
+	sudo zypper -n install zip unzip dos2unix htop git autojump diff-so-fancy jq
 fi
 
 # Install fzf

@@ -120,11 +120,39 @@ function setContainerRuntime {
 }
 
 # Login to ECR
-function ecr-login {
+function ecrLogin {
 	command="aws ecr get-login-password --region us-east-1 | $CONTAINER_RUNTIME  login --username AWS --password-stdin 828586629811.dkr.ecr.us-east-1.amazonaws.com"
 
 	echo ">>> Attempting ECR login using command $command"
 	eval $command
+}
+
+# Clean Tomcat
+function cleanTomcat {
+    rm -rf $HOME/debtmanager/dm-tomcat/apache-tomcat/bin/ObjectStore
+    rm -f $HOME/debtmanager/dm-tomcat/apache-tomcat/bin/Blaze.log
+    rm -rf $HOME/debtmanager/dm-tomcat/apache-tomcat/dmIgniteCache
+    rm -rf $HOME/debtmanager/dm-tomcat/apache-tomcat/logs
+    rm -rf $HOME/debtmanager/dm-tomcat/apache-tomcat/temp
+    rm -rf $HOME/debtmanager/dm-tomcat/apache-tomcat/work
+}
+
+# Kill process by keyword
+function killProcess {
+    keyword=$1
+    if [[ -z $keyword ]]; then
+        echo "Usage: killProcess <keyword>"
+        return 1
+    fi
+
+    pids=$(pgrep -f $keyword)
+    if [[ -z $pids ]]; then
+        echo "No process found with keyword '$keyword'."
+        return 1
+    fi
+
+    echo "Killing processes with keyword '$keyword': $pids"
+    kill -9 $pids
 }
 
 
@@ -182,21 +210,28 @@ function runArtemis {
 	eval $command
 }
 
-# Apache Httpd Docker
-function runHttpd {
-    containerVersion=$1
-    if [[ -z $containerVersion ]]
-    then
-        containerVersion='develop'
-    fi
-    containerName="dm-httpd-$containerVersion"
+# DM Rest Docker
+function runDmRest {
+	containerVersion=$1
+	if [[ -z $containerVersion ]]
+	then
+		containerVersion='develop'
+	fi
+	contianerName="dm-rest-$containerVersion"
 
-    echo ">>> Deleting running container: $containerName"
-    command="$CONTAINER_RUNTIME rm -f $contianerName"
+	echo ">>> Deleting running contianer: $contianerName"
+	command="$CONTAINER_RUNTIME rm -f $contianerName"
 	eval $command
 
-    echo ">>> Running httpd Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-httpd:$containerVersion"
-	command="$CONTAINER_RUNTIME run -d --name $containerName -p 8080:80 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-httpd:$containerVersion"
+	echo ">>> Running dm-rest-services Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-rest-services:$containerVersion"
+	command="$CONTAINER_RUNTIME run --name $contianerName \
+	-p 8080:8080 \
+	-e dbhost=host.docker.internal -e dbport=5432 \
+	-e mqhost=host.docker.internal -e mqport=61616 \
+	-e tadb=dm_tenant_admin -e tadbuser=tenantadmin -e tadbpassword=P@55w0rd \
+	-e nodename=dm -e debug=false \
+	-v $HOME/debtmanager/fs:/usr/local/dm \
+	828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-rest-services:$containerVersion"
 	eval $command
 }
 
@@ -205,8 +240,8 @@ function listEcrImages {
 	search_text=$2
 	if [[ -z $repo_name || -z $search_text ]]
 	then
-		echo "Usage: listImages <repo_name> <search_text>"
-		echo "eg: listImages dm-rest-services R11.3"
+		echo "Usage: listEcrImages <repo_name> <search_text>"
+		echo "eg: listEcrImages dm-rest-services R11.3"
 		return
 	fi
 	command="aws ecr describe-images --repository-name $repo_name --query 'reverse(sort_by(imageDetails,& imagePushedAt))[*]' | jq '.[:10] | .[] | select (.imageTags | .[] | contains(\"$search_text\")) | {repositoryName:.repositoryName, imageTags:.imageTags, imagePushedAt:.imagePushedAt, lastRecordedPullTime:.lastRecordedPullTime}'"

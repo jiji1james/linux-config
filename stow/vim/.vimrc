@@ -110,6 +110,9 @@ call plug#begin()
 	
 	" https://github.com/preservim/nerdtree
 	Plug 'preservim/nerdtree'
+
+    " https://github.com/tpope/vim-fugitive
+    Plug 'tpope/vim-fugitive'
 call plug#end()
 
 " }}}
@@ -117,10 +120,10 @@ call plug#end()
 " MAPPINGS --------------------------------------------------------------- {{{
 
 " Set the backslash as the leader key.
-let mapleader = '\'
+let mapleader = ','
 
 " Press \\ to jump back to the last cursor position.
-nnoremap <leader>\ ``
+nnoremap <leader>, ``
 
 " Pressing the letter o will open a new line below the current one.
 " Exit insert mode after creating a new line above or below the current line.
