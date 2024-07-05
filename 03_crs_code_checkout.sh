@@ -29,28 +29,54 @@ function checkoutGitRepository {
     echo ""
 }
 
-mkdir -p $HOME/crs/cos
-checkoutGitRepository callout-service $HOME/crs/cos
+export checkout="N"
+echo ""
+read -p "Checkout Callout Services (Y/N): " checkout
+if [[ "$checkout" == "Y" ]]; then
+	mkdir -p $HOME/crs/cos
+	checkoutGitRepository callout-service $HOME/crs/cos
+fi
 
-mkdir -p $HOME/crs/comm
-checkoutGitRepository cnr-comm-service $HOME/crs/comm
+checkout="N"
+echo ""
+read -p "Checkout Communicator (Y/N): " checkout
+if [[ "$checkout" == "Y" ]]; then
+	mkdir -p $HOME/crs/comm
+	checkoutGitRepository cnr-comm-service $HOME/crs/comm
+	checkoutGitRepository cnr-comm-ui $HOME/crs/comm
+fi
 
-checkoutGitRepository crsj2ee $HOME/debtmanager/cloud
-checkoutGitRepository browser-client $HOME/debtmanager/cloud
-checkoutGitRepository db-postgres $HOME/debtmanager/cloud
-checkoutGitRepository db-sqlserver $HOME/debtmanager/cloud
-checkoutGitRepository db-oracle $HOME/debtmanager/cloud
-checkoutGitRepository environment $HOME/debtmanager/cloud
-checkoutGitRepository etl $HOME/debtmanager/cloud
-checkoutGitRepository reports $HOME/debtmanager/cloud
-checkoutGitRepository configuration-management $HOME/debtmanager/cloud
+checkout="N"
+echo ""
+read -p "Checkout Debt Manager for Cloud (Y/N): " checkout
+if [[ "$checkout" == "Y" ]]; then
+	checkoutGitRepository crsj2ee $HOME/debtmanager/cloud
+	checkoutGitRepository browser-client $HOME/debtmanager/cloud
+	checkoutGitRepository db-postgres $HOME/debtmanager/cloud
+	checkoutGitRepository db-sqlserver $HOME/debtmanager/cloud
+	checkoutGitRepository db-oracle $HOME/debtmanager/cloud
+	checkoutGitRepository environment $HOME/debtmanager/cloud
+	checkoutGitRepository etl $HOME/debtmanager/cloud
+	checkoutGitRepository reports $HOME/debtmanager/cloud
+	checkoutGitRepository configuration-management $HOME/debtmanager/cloud
+fi
 
-checkoutGitRepository crsj2ee $HOME/debtmanager/onprem
-checkoutGitRepository browser-client $HOME/debtmanager/onprem
-checkoutGitRepository environment $HOME/debtmanager/onprem
-checkoutGitRepository configuration-management $HOME/debtmanager/onprem
-checkoutGitRepository db-sqlserver $HOME/debtmanager/onprem
+checkout="N"
+echo ""
+read -p "Checkout Debt Manager for OnPrem (Y/N): " checkout
+if [[ "$checkout" == "Y" ]]; then
+	checkoutGitRepository crsj2ee $HOME/debtmanager/onprem
+	checkoutGitRepository browser-client $HOME/debtmanager/onprem
+	checkoutGitRepository environment $HOME/debtmanager/onprem
+	checkoutGitRepository configuration-management $HOME/debtmanager/onprem
+	checkoutGitRepository db-sqlserver $HOME/debtmanager/onprem
+fi
 
-checkoutGitRepository dm-tomcat $HOME/debtmanager
-checkoutGitRepository dm-jboss $HOME/debtmanager
-checkoutGitRepository dm-activemq-artemis $HOME/debtmanager
+checkout="N"
+echo ""
+read -p "Checkout Debt Manager Runtime Tools (Y/N): " checkout
+if [[ "$checkout" == "Y" ]]; then
+	checkoutGitRepository dm-tomcat $HOME/debtmanager
+	checkoutGitRepository dm-jboss $HOME/debtmanager
+	checkoutGitRepository dm-activemq-artemis $HOME/debtmanager
+fi

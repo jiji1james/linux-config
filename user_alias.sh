@@ -37,14 +37,8 @@ alias ls='ls -hF --color=tty'
 alias ll='ls -l --color=auto'
 alias la='ls -A --color=auto'
 
-# Make the prompt useful
-# export PS1='\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n\$ '
-
 # List directory names before file names like DOS
 alias dir='ls -lahF --color=tty --time-style=long-iso --group-directories-first'
-
-# Short-hand for a clean-screen directory listing
-alias clsd='clear; dir'
 
 # Setup tools
 export CONTAINER_RUNTIME="docker"
