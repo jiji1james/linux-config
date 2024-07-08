@@ -26,9 +26,8 @@ fpath=($ZSH/plugins/zsh-completions/src $fpath)
 SPACESHIP_PROMPT_ORDER=(
   user          # Username section
   dir           # Current directory section
-  host          # Hostname section
   git           # Git section (git_branch + git_status)
-  hg            # Mercurial section (hg_branch  + hg_status)
+  java          # Java Section
   exec_time     # Execution time
   line_sep      # Line break
   jobs          # Background jobs indicator
@@ -40,15 +39,20 @@ SPACESHIP_PROMPT_ADD_NEWLINE=false
 SPACESHIP_CHAR_SYMBOL="❯"
 SPACESHIP_CHAR_SUFFIX=" "
 
-### ---- PLUGINS & THEMES ----
-source ~/linux-config/user_functions.sh
-source ~/linux-config/user_alias.sh
-
 ### ---- Autojump ----
 [[ -s "/usr/share/autojump/autojump.sh" ]] && source "/usr/share/autojump/autojump.sh"
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+### ---- THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!! ----
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+# Configure fzf ----
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+### ---- PLUGINS & THEMES ----
+source ~/linux-config/user_functions.sh
+source ~/linux-config/user_alias.sh
+source ~/linux-config/user_fzf_functions.sh
+
+### ---- Print a block of env values ----
+printEnvironmentStatus

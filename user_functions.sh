@@ -27,8 +27,6 @@ function printEnvironmentStatus {
 	echo "Machine:        $unameMachine"
 	echo "Arch:           $unameArch"
 	echo "SHELL:          $(which $SHELL)"
-	echo "Container:      $CONTAINER_RUNTIME"
-	echo "Java:           $JAVA_HOME"
 	echo "---------------------------------------"
 	echo "Start Up:       $(uptime -s)"
 	echo "Nameserver:     $HOST_IP"
@@ -36,6 +34,12 @@ function printEnvironmentStatus {
 	echo "Date:           $(date)"
 	echo "---------------------------------------"
 }
+
+# Declare variables
+export DM_HOME="$HOME/debtmanager"
+export TOMCAT_HOME="$DM_HOME/dm-tomcat/apache-tomcat"
+export JBOSS_HOME="$DM_HOME/dm-jboss/jboss-eap"
+export FS_HOME="$DM_HOME/fs"
 
 # Delete all Git Branches except master and develop
 function gitCleanBranches {
@@ -127,14 +131,32 @@ function ecrLogin {
 	eval $command
 }
 
+# Recursive dos2unix
+function dos2unix-recurse {
+	find . -type f -name "*.txt" | xargs dos2unix
+}
+
 # Clean Tomcat
 function cleanTomcat {
-    rm -rf $HOME/debtmanager/dm-tomcat/apache-tomcat/bin/ObjectStore
-    rm -f $HOME/debtmanager/dm-tomcat/apache-tomcat/bin/Blaze.log
-    rm -rf $HOME/debtmanager/dm-tomcat/apache-tomcat/dmIgniteCache
-    rm -rf $HOME/debtmanager/dm-tomcat/apache-tomcat/logs
-    rm -rf $HOME/debtmanager/dm-tomcat/apache-tomcat/temp
-    rm -rf $HOME/debtmanager/dm-tomcat/apache-tomcat/work
+    rm -rf $TOMCAT_HOME/bin/ObjectStore
+    rm -f $TOMCAT_HOME/bin/Blaze.log
+    rm -rf $TOMCAT_HOME/dmIgniteCache
+    rm -rf $TOMCAT_HOME/logs
+    rm -rf $TOMCAT_HOME/temp
+    rm -rf $TOMCAT_HOME/work
+}
+
+# Start Tomcat
+function startTomcat {
+	current_path=$(pwd)
+	echo ">>> Cleaning Tomcat"
+	cleanTomcat
+	echo ">>> Replace log4j files"
+	rsync -av --ignore-existing $FS_HOME/log4j/*.xml $TOMCAT_HOME/log4j/
+	echo ">>> Starting Tomcat"
+	cd $TOMCAT_HOME/bin
+	./dm-startup.sh
+	cd $current_path
 }
 
 # Kill process by keyword
@@ -210,6 +232,28 @@ function runArtemis {
 	eval $command
 }
 
+# FitLogic Docker
+function runFitLogic {
+	containerVersion=$1
+	if [[ -z $containerVersion ]]
+	then
+		containerVersion='vienna.8.2-ubuntu'
+	fi
+	contianerName="dm-smarts-$containerVersion"
+	
+	echo ">>> Deleting running contianer: $contianerName"
+	command="$CONTAINER_RUNTIME rm -f $contianerName"
+	eval $command
+
+	echo ">>> Running Fit Logic Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
+	command="$CONTAINER_RUNTIME run -d --name $contianerName \
+		-p 443:8443 \
+		--env-file $HOME/debtmanager/smarts/smarts.env.settings \
+		-v $HOME/debtmanager/smarts/data:/var/opt/sl/data \
+		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
+	eval $command
+}
+
 # DM Rest Docker
 function runDmRest {
 	containerVersion=$1
@@ -225,13 +269,13 @@ function runDmRest {
 
 	echo ">>> Running dm-rest-services Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-rest-services:$containerVersion"
 	command="$CONTAINER_RUNTIME run --name $contianerName \
-	-p 8080:8080 \
-	-e dbhost=host.docker.internal -e dbport=5432 \
-	-e mqhost=host.docker.internal -e mqport=61616 \
-	-e tadb=dm_tenant_admin -e tadbuser=tenantadmin -e tadbpassword=P@55w0rd \
-	-e nodename=dm -e debug=false \
-	-v $HOME/debtmanager/fs:/usr/local/dm \
-	828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-rest-services:$containerVersion"
+		-p 8080:8080 \
+		-e dbhost=host.docker.internal -e dbport=5432 \
+		-e mqhost=host.docker.internal -e mqport=61616 \
+		-e tadb=dm_tenant_admin -e tadbuser=tenantadmin -e tadbpassword=P@55w0rd \
+		-e nodename=dm -e debug=false \
+		-v $HOME/debtmanager/fs:/usr/local/dm \
+		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-rest-services:$containerVersion"
 	eval $command
 }
 
@@ -247,104 +291,4 @@ function listEcrImages {
 	command="aws ecr describe-images --repository-name $repo_name --query 'reverse(sort_by(imageDetails,& imagePushedAt))[*]' | jq '.[:10] | .[] | select (.imageTags | .[] | contains(\"$search_text\")) | {repositoryName:.repositoryName, imageTags:.imageTags, imagePushedAt:.imagePushedAt, lastRecordedPullTime:.lastRecordedPullTime}'"
 	echo ">>> $command"
 	eval "$command"
-}
-
-# Short-hand for displaying configuration files without comments
-function show {
-	showFile=${1:?"${FUNCNAME[0]}: No file specified"}
-	if [ ! -f "$showFile" ]; then
-		echo "${FUNCNAME[0]}: No such file: $showFile" >&2
-		return 2
-	fi
-	egrep -v '^\s*$|^\s*(#|//|;)' $showFile | perl -ne 'print unless /\/\*/../\*\//' | perl -ne 'print unless /<!--/../-->/'
-}
-
-# Function to intelligently un-tar files without having to memorize all the
-# correct flags to tar.
-function untar {
-	local targetFile=${1:?"ERROR:  You must specify a file to untar!"}
-	local fileExt=${targetFile##*.}
-	local tarCommand=tar
-	local evalCommand
-
-	case $fileExt in
-		tar)        # Uncompressed
-			tarCommand="$tarCommand xvf"
-			;;
-		tgz|gz)     # GZip
-			tarCommand="$tarCommand xvfz"
-			;;
-		bz2)        # BZip2
-			tarCommand="$tarCommand xvfj"
-			;;
-		lgz|lz7|lz) # LZip
-			tarCommand="$tarCommand xvfJ"
-			;;
-		*)          # Unknown
-			echo "Unknown tar file extension: $fileExt" >&2
-			return 1
-	esac
-
-	shift
-	evalCommand="$tarCommand $targetFile $@"
-	echo $evalCommand
-	$evalCommand
-}
-
-# Function to intelligently zip resources without having to remember all the
-# necessary flags.
-function zip {
-	local zipTarget=${1:?"ERROR:  You must specify a resource to zip!"}
-	local zipFile=${zipTarget}.zip
-	local zipOpts=$ZIP_OPTS
-	local zipBin
-	local zipCommand
-
-	# Bail if zip has not been installed
-	zipBin=$(which zip)
-	if [ 0 -ne $? ]; then
-		zipBin=/usr/bin/zip
-		if [ ! -e $zipBin ]; then
-			zipBin=/usr/local/bin/zip
-			if [ ! -e $zipBin ]; then
-				zipBin=/bin/zip
-				if [ ! -e $zipBin ]; then
-					echo "ERROR:  No zip binary in the path!" >&2
-					return 1
-				fi
-			fi
-		fi
-	fi
-
-	# Pass all arguments to the actual zip binary if the first argument to this
-	# function is a flag.
-	if [ "-" = "${zipTarget:0:1}" ]; then
-		$zipBin $@
-		return $?
-	fi
-
-	# Bail if there's nothing to do
-	if [ ! -e "$zipTarget" ]; then
-		echo "ERROR:  $zipTarget does not exist." >&2
-		return 2
-	fi
-
-	# Update zip files that already exist
-	if [ -e "$zipFile" ]; then
-		zipOpts=${zipOpts}" --update"
-	fi
-
-	# Recursively zip directory targets
-	if [ -d "$zipTarget" ]; then
-		zipOpts=${zipOpts}" --recurse-paths"
-	fi
-
-	# Always verify the zip file and operate verbosely
-	zipOpts=${zipOpts}" --test --verbose"
-
-	# Perform the zip operation and return its exit state
-	zipCommand="$zipBin $zipOpts $zipFile $zipTarget"
-	echo $zipCommand
-	$zipCommand
-	return $?
 }

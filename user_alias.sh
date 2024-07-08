@@ -1,9 +1,6 @@
 #!/usr/bin/env zsh
 
-# While the STANDARD width of a HORIZONTAL TAB is 5 SPACES, select key Linux
-# shell authors erroneously set this width to 8.  Over time, a comfortable NORM
-# of 4 spaces has been widely adopted by developers of most low-level languages
-# (c, c++, etc.).  We will also adopt 4-space tab widths.
+# Set tab size to 4 
 tabs 4
 
 # History Options
@@ -51,11 +48,11 @@ alias dos2unix-recurse="find . -type f -exec dos2unix '{}' '+'"
 export WSL_IP=$(wsl-ip-addr)
 export HOST_IP=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf)
 
-alias dm='cd $HOME/debtmanager'
-alias cloud='cd $HOME/debtmanager/cloud'
-alias onprem='cd $HOME/debtmanager/onprem'
-alias tomcat='cd $HOME/debtmanager/dm-tomcat/apache-tomcat'
-alias jboss='cd $HOME/debtmanager/dm-jboss/jboss-eap'
+alias dm='cd $DM_HOME'
+alias cloud='cd $DM_HOME/cloud'
+alias onprem='cd $DM_HOME/onprem'
+alias tomcat='cd $TOMCAT_HOME'
+alias jboss='cd $JBOSS_HOME'
 
 # Bash PS1 config
 if [[ -f "$HOME/linux-config/git-prompt.sh" ]]; then
@@ -68,7 +65,3 @@ if [[ -f "$HOME/linux-config/git-prompt.sh" ]]; then
     # Colorized using https://www.cyberciti.biz/faq/bash-shell-change-the-color-of-my-shell-prompt-under-linux-or-unix/
     export PS1='\n\e[0;32m\W\e[m\e[0;33m$(__git_ps1 " (%s)")\e[m @ \e[0;36m$WSL_IP\e[m\n> '
 fi
-
-# Print a block of env values
-printEnvironmentStatus
-
