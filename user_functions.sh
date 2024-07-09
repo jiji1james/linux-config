@@ -136,6 +136,24 @@ function dos2unix-recurse {
 	find . -type f -name "*.txt" | xargs dos2unix
 }
 
+# Kill process by keyword
+function killProcess {
+    keyword=$1
+    if [[ -z $keyword ]]; then
+        echo "Usage: killProcess <keyword>"
+        return 1
+    fi
+
+    pids=$(pgrep -f $keyword)
+    if [[ -z $pids ]]; then
+        echo "No process found with keyword '$keyword'."
+        return 1
+    fi
+
+    echo "Killing processes with keyword '$keyword': $pids"
+    kill -9 $pids
+}
+
 # Clean Tomcat
 function cleanTomcat {
     rm -rf $TOMCAT_HOME/bin/ObjectStore
@@ -159,24 +177,10 @@ function startTomcat {
 	cd $current_path
 }
 
-# Kill process by keyword
-function killProcess {
-    keyword=$1
-    if [[ -z $keyword ]]; then
-        echo "Usage: killProcess <keyword>"
-        return 1
-    fi
-
-    pids=$(pgrep -f $keyword)
-    if [[ -z $pids ]]; then
-        echo "No process found with keyword '$keyword'."
-        return 1
-    fi
-
-    echo "Killing processes with keyword '$keyword': $pids"
-    kill -9 $pids
+# Stop Tomcat
+function stopTomcat {
+	killProcess "tomcat"
 }
-
 
 # Sql Server Docker
 function runSqlServer {
