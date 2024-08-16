@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 
-# Check https://github.com/JonasGroeger/jetbrains-ppa
-curl -s https://s3.eu-central-1.amazonaws.com/jetbrains-ppa/0xA6E8698A.pub.asc | gpg --dearmor | sudo tee /usr/share/keyrings/jetbrains-ppa-archive-keyring.gpg > /dev/null
-echo "deb [signed-by=/usr/share/keyrings/jetbrains-ppa-archive-keyring.gpg] http://jetbrains-ppa.s3-website.eu-central-1.amazonaws.com any main" | sudo tee /etc/apt/sources.list.d/jetbrains-ppa.list > /dev/null
-sudo apt-get update
+version='2024.2.0.1'
 
-sudo apt-get install -y intellij-idea-community
+mkdir ~/.jetbrains
 
-sudo apt-get install -y intellij-idea-ultimate
+# Find download link from https://www.jetbrains.com/idea/download/other.html
+wget https://download.jetbrains.com/idea/ideaIU-$version.tar.gz
+mv ~/ideaIU-$version.tar.gz ~/.jetbrains
+
+tar -zxvf ~/.jetbrains/ideaIU-$version.tar.gz -C ~/.jetbrains
+rm ~/.jetbrains/ideaIU-$version.tar.gz 
+
+ln -s ~/.jetbrains/idea-IU* ~/.jetbrains/idea
+
