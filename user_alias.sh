@@ -55,7 +55,6 @@ alias tomcat='cd $TOMCAT_HOME'
 alias jboss='cd $JBOSS_HOME'
 
 alias idea="~/.jetbrains/idea/bin/idea > /dev/null 2>&1 &"
-alias idea.="~/.jetbrains/idea/bin/idea . > /dev/null 2>&1 &"
 
 # Bash PS1 config
 if [[ -f "$HOME/linux-config/git-prompt.sh" ]]; then

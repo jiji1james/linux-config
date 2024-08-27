@@ -29,27 +29,28 @@ function checkoutGitRepository {
     echo ""
 }
 
-export checkout="N"
 echo ""
-read -p "Checkout Callout Services (Y/N): " checkout
-if [[ "$checkout" == "Y" ]]; then
+read -p "Checkout Callout Services (Y/N): " coscheckout
+read -p "Checkout Communicator (Y/N): " commcheckout
+read -p "Checkout Debt Manager for Cloud (Y/N): " cloudcheckout
+read -p "Checkout Debt Manager for OnPrem (Y/N): " onpremcheckout
+read -p "Checkout Debt Manager Runtime Tools (Y/N): " toolscheckout
+read -p "Checkout Debt Manager Libraries (Y/N): " libcheckout
+
+if [[ "$coscheckout" == "Y" ]]; then
 	mkdir -p $HOME/crs/cos
 	checkoutGitRepository callout-service $HOME/crs/cos
 fi
 
-checkout="N"
 echo ""
-read -p "Checkout Communicator (Y/N): " checkout
-if [[ "$checkout" == "Y" ]]; then
+if [[ "$commcheckout" == "Y" ]]; then
 	mkdir -p $HOME/crs/comm
 	checkoutGitRepository cnr-comm-service $HOME/crs/comm
 	checkoutGitRepository cnr-comm-ui $HOME/crs/comm
 fi
 
-checkout="N"
 echo ""
-read -p "Checkout Debt Manager for Cloud (Y/N): " checkout
-if [[ "$checkout" == "Y" ]]; then
+if [[ "$cloudcheckout" == "Y" ]]; then
 	checkoutGitRepository crsj2ee $HOME/debtmanager/cloud
 	checkoutGitRepository browser-client $HOME/debtmanager/cloud
 	checkoutGitRepository db-postgres $HOME/debtmanager/cloud
@@ -61,10 +62,8 @@ if [[ "$checkout" == "Y" ]]; then
 	checkoutGitRepository configuration-management $HOME/debtmanager/cloud
 fi
 
-checkout="N"
 echo ""
-read -p "Checkout Debt Manager for OnPrem (Y/N): " checkout
-if [[ "$checkout" == "Y" ]]; then
+if [[ "$onpremcheckout" == "Y" ]]; then
 	checkoutGitRepository crsj2ee $HOME/debtmanager/onprem
 	checkoutGitRepository browser-client $HOME/debtmanager/onprem
 	checkoutGitRepository environment $HOME/debtmanager/onprem
@@ -72,11 +71,20 @@ if [[ "$checkout" == "Y" ]]; then
 	checkoutGitRepository db-sqlserver $HOME/debtmanager/onprem
 fi
 
-checkout="N"
 echo ""
-read -p "Checkout Debt Manager Runtime Tools (Y/N): " checkout
-if [[ "$checkout" == "Y" ]]; then
+if [[ "$toolscheckout" == "Y" ]]; then
 	checkoutGitRepository dm-tomcat $HOME/debtmanager
 	checkoutGitRepository dm-jboss $HOME/debtmanager
 	checkoutGitRepository dm-activemq-artemis $HOME/debtmanager
 fi
+
+echo ""
+if [[ "$libcheckout" == "Y" ]]; then
+    checkoutGitRepository dm-framework-core $HOME/debtmanager
+    checkoutGitRepository dm-authentication-provider $HOME/debtmanager
+    checkoutGitRepository dm-integration-epp-img $HOME/debtmanager
+    checkoutGitRepository dm-dev-tools $HOME/debtmanager
+fi
+
+echo ">>> Code Checkout Completed!!!"
+

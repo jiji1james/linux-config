@@ -46,7 +46,7 @@ SPACESHIP_CHAR_SUFFIX=" "
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-# Configure fzf ----
+# ---- Configure fzf ----
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 ### ---- PLUGINS & THEMES ----

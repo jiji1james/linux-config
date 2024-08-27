@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-idea_version='2024.2.0.1'
+idea_version='2024.2.0.2'
 
 mkdir ~/.jetbrains
 rm -f ~/.jetbrains/idea
@@ -17,7 +17,7 @@ ln -s ~/.jetbrains/idea-IU* ~/.jetbrains/idea
 ls -l ~/.jetbrains
 
 # https://www.jetbrains.com/toolbox-app/download/other.html
-wget https://download.jetbrains.com/toolbox/jetbrains-toolbox-2.4.2.32922.tar.gz -P ~/.jetbrains
-tar -zxvf ~/.jetbrains/jetbrains-toolbox-2.4.2.32922.tar.gz -C ~/.jetbrains
-rm -f ~/.jetbrains/jetbrains-toolbox-2.4.2.32922.tar.gz
-ln -s ~/.jetbrains/jetbrains-toolbox-2.4.2.32922 ~/.jetbrains/toolbox
+# wget https://download.jetbrains.com/toolbox/jetbrains-toolbox-2.4.2.32922.tar.gz -P ~/.jetbrains
+# tar -zxvf ~/.jetbrains/jetbrains-toolbox-2.4.2.32922.tar.gz -C ~/.jetbrains
+# rm -f ~/.jetbrains/jetbrains-toolbox-2.4.2.32922.tar.gz
+# ln -s ~/.jetbrains/jetbrains-toolbox-2.4.2.32922 ~/.jetbrains/toolbox
