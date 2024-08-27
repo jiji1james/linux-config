@@ -15,9 +15,9 @@ rm -f awscliv2.zip
 curl -s "https://get.sdkman.io" | bash
 source $HOME/.sdkman/bin/sdkman-init.sh
 
-sdk install java 8.0.402-amzn
-sdk install java 11.0.22-amzn
-sdk install java 17.0.9-amzn
+sdk install java 8.0.422-amzn
+sdk install java 11.0.24-amzn
+sdk install java 17.0.11-amzn
 
 sdk install ant 1.9.15
 sdk install maven 3.9.6
