@@ -59,25 +59,25 @@ fi
 
 # Delete previous installs
 rm -rf ~/.jetbrains
-mkdir ~/.jetbrains
+mkdir -p ~/.jetbrains/software
 
 # Install required software
-sudo apt install -y gnome-software
+sudo dnf install -y gnome-software
 
 # Find download link from https://www.jetbrains.com/idea/download/other.html
 
 if [[ "$use_ultimate" == 'true' ]]; then
     wget https://download.jetbrains.com/idea/ideaIU-$idea_version.tar.gz -P ~/.jetbrains
-    tar -zxvf ~/.jetbrains/ideaIU-$idea_version.tar.gz -C ~/.jetbrains
+    tar -zxvf ~/.jetbrains/ideaIU-$idea_version.tar.gz -C ~/.jetbrains/software
     rm -f ~/.jetbrains/ideaIU-$idea_version.tar.gz 
-    ln -s ~/.jetbrains/idea-IU* ~/.jetbrains/ideau
+    ln -s ~/.jetbrains/software/idea-IU* ~/.jetbrains/ideau
 fi
 
 if [[ "$use_community" == 'true' ]]; then
     wget https://download.jetbrains.com/idea/ideaIC-$idea_version.tar.gz -P ~/.jetbrains
-    tar -zxvf ~/.jetbrains/ideaIC-$idea_version.tar.gz -C ~/.jetbrains
+    tar -zxvf ~/.jetbrains/ideaIC-$idea_version.tar.gz -C ~/.jetbrains/software
     rm -f ~/.jetbrains/ideaIC-$idea_version.tar.gz 
-    ln -s ~/.jetbrains/idea-IC* ~/.jetbrains/ideac
+    ln -s ~/.jetbrains/software/idea-IC* ~/.jetbrains/ideac
 fi
 
 ls -l ~/.jetbrains
