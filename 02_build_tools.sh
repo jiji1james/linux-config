@@ -16,7 +16,6 @@ curl -s "https://get.sdkman.io" | bash
 source $HOME/.sdkman/bin/sdkman-init.sh
 
 sdk install java 8.0.422-amzn
-sdk install java 11.0.24-amzn
 sdk install java 17.0.11-amzn
 
 sdk install ant 1.9.15

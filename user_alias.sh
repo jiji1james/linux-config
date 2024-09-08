@@ -3,7 +3,7 @@
 # Set tab size to 4 
 tabs 4
 
-alias zsh-source='source $HOME/.zshrc'
+alias zsh-source='exec zsh'
 alias bash-source='source $HOME/.bashrc'
 
 # Default to human readable figures for common file-size reporting commands
@@ -45,4 +45,5 @@ alias onprem='cd $DM_HOME/onprem'
 alias tomcat='cd $TOMCAT_HOME'
 alias jboss='cd $JBOSS_HOME'
 
-alias idea="~/.jetbrains/ideau/bin/idea > /dev/null 2>&1 &"
+alias ideau="~/.jetbrains/ideau/bin/idea > /dev/null 2>&1 &"
+alias ideac="~/.jetbrains/ideac/bin/idea > /dev/null 2>&1 &"

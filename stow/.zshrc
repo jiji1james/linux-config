@@ -26,7 +26,7 @@ zinit cdreplay -q
 
 # Oh My Posh
 export PATH=$PATH:$HOME/.local/bin
-eval "$(oh-my-posh init zsh)"
+eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/zen.toml)"
 
 # Keybindings
 bindkey -e

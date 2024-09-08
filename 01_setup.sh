@@ -24,11 +24,14 @@ fi
 if $IS_UBUNTU; then
 	echo ">>> Install Ubuntu Packages"
 	sudo apt update -y
-	sudo apt install -y zip unzip dos2unix zsh htop git autojump zsh jq zoxide
+	sudo apt install -y zip unzip dos2unix zsh htop git autojump zsh jq zoxide fzf stow
+    sudo add-apt-repository ppa:aos1/diff-so-fancy
+    sudo apt update
+    sudo apt install diff-so-fancy
 elif $IS_FEDORA; then
 	echo ">>> Install Fedora Packages"
 	sudo dnf upgrade
-	sudo dnf install -y zip unzip dos2unix htop git autojump zsh jq
+	sudo dnf install -y zip unzip dos2unix htop git autojump zsh jq fzf stow
 	sudo dnf install -y dnf-plugins-core
 	sudo dnf copr enable -y kopfkrieg/diff-so-fancy
 	sudo dnf install -y diff-so-fancy
@@ -37,12 +40,13 @@ elif $IS_SUSE; then
 	sudo zypper ref
 	sudo zypper list-updates --all
 	sudo zypper -n update
-	sudo zypper -n install zip unzip dos2unix htop git autojump diff-so-fancy jq
+	sudo zypper -n install zip unzip dos2unix htop git autojump diff-so-fancy jq fzf stow
 fi
 
-# Install fzf
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
+# Stow files
+cd stow
+stow -t $HOME .
+cd ..
 
 # Install ohmyposh
 curl -s https://ohmyposh.dev/install.sh | bash -s
