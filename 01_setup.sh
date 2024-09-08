@@ -45,7 +45,11 @@ fi
 
 # Stow files
 cd stow
-stow -t $HOME .
+stow -t $HOME git
+mkdir $HOME/.config
+stow -t $HOME/.config config
+stow -t $HOME shell
+stow -t $HOME vim
 cd ..
 
 # Install ohmyposh
