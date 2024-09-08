@@ -24,7 +24,7 @@ fi
 if $IS_UBUNTU; then
 	echo ">>> Install Ubuntu Packages"
 	sudo apt update -y
-	sudo apt install -y zip unzip dos2unix zsh htop git autojump zsh jq
+	sudo apt install -y zip unzip dos2unix zsh htop git autojump zsh jq zoxide
 elif $IS_FEDORA; then
 	echo ">>> Install Fedora Packages"
 	sudo dnf upgrade
@@ -43,6 +43,9 @@ fi
 # Install fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
+
+# Install ohmyposh
+curl -s https://ohmyposh.dev/install.sh | bash -s
 
 # Add Zscalar certs
 echo ""

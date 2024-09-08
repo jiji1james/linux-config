@@ -3,15 +3,6 @@
 # Set tab size to 4 
 tabs 4
 
-# History Options
-# Don't put duplicate lines in the history.
-export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
-
-# Ignore some controlling instructions
-# HISTIGNORE is a colon-delimited list of patterns which should be excluded.
-# The '&' is a special pattern which suppresses duplicate entries.
-export HISTIGNORE=$'[ \t]*:&:[fb]g:exit:logout:ls:dir:clear'
-
 alias zsh-source='source $HOME/.zshrc'
 alias bash-source='source $HOME/.bashrc'
 
@@ -54,16 +45,4 @@ alias onprem='cd $DM_HOME/onprem'
 alias tomcat='cd $TOMCAT_HOME'
 alias jboss='cd $JBOSS_HOME'
 
-alias idea="~/.jetbrains/idea/bin/idea > /dev/null 2>&1 &"
-
-# Bash PS1 config
-if [[ -f "$HOME/linux-config/git-prompt.sh" ]]; then
-    source $HOME/linux-config/git-prompt.sh
-
-    # Default from https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
-    # This is copied as git-prompt.sh
-    # PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
-
-    # Colorized using https://www.cyberciti.biz/faq/bash-shell-change-the-color-of-my-shell-prompt-under-linux-or-unix/
-    export PS1='\n\e[0;32m\W\e[m\e[0;33m$(__git_ps1 " (%s)")\e[m @ \e[0;36m$WSL_IP\e[m\n> '
-fi
+alias idea="~/.jetbrains/ideau/bin/idea > /dev/null 2>&1 &"
