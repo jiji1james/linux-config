@@ -8,7 +8,7 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
 # Add in zsh plugins
-zinit light zsh-users/zsh-syntax-highlighting
+zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
@@ -58,8 +58,9 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 eval "$(zoxide init --cmd cd zsh)"
 
 # Personal config & functions
-source ~/linux-config/user_functions.sh
-source ~/linux-config/user_alias.sh
+[ -f ~/linux-config/user_functions.sh ] && source ~/linux-config/user_functions.sh
+[ -f ~/linux-config/user_alias.sh ] && source ~/linux-config/user_alias.sh
+[ -f ~/user_override.sh ] && source ~/user_override.sh
 
 # Print environment information\
 printEnvironmentStatus

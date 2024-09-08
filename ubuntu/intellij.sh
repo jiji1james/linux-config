@@ -1,20 +1,24 @@
 #!/usr/bin/env bash
 
-idea_version='2024.2.0.2'
+idea_version='2024.2.1'
 use_ultimate='false'
-use_community='true'
+use_community='false'
+remove_existing='false'
+install_idea='false'
 
 help_message() {
   echo
-  echo "Usage: $(basename $0) [-v 2024.2.0.2] [-u] [-h]"
+  echo "Usage: $(basename $0) [-v 2024.2.0.2] [-u] [-c] [-r] [-h]"
   echo "options:"
   echo "h     Print the Help Message."
   echo "v     Intellij Version."
   echo "u     Use Ultimate Version."
+  echo "c     Use Community Version."
+  echo "r     Remove exising install."
   echo
 }
 
-while getopts ':v:cuh' opt; do
+while getopts ':v:curh' opt; do
   case "$opt" in
     v)
       build_version="$OPTARG"
@@ -29,6 +33,11 @@ while getopts ':v:cuh' opt; do
     c)
       use_community='true'
       echo "Using Intellij Community Version"
+      ;;
+
+    r)
+      remove_existing='true'
+      echo "Removing existing Intellij from $HOME/.jetbrains"
       ;;
 
     h)
@@ -49,20 +58,23 @@ while getopts ':v:cuh' opt; do
 done
 shift "$(($OPTIND -1))"
 
-sysctl_file='/etc/sysctl.conf'
-file_watches_string='fs.inotify.max_user_watches=1048576'
+if [[ "$remove_existing" == 'true' ]]; then
+    # Delete previous installs
+    rm -rf ~/.jetbrains
+elif [[ "$use_ultimate" == 'true' || "$use_community" == 'true' ]]; then
+    mkdir -p ~/.jetbrains/software
 
-if ! grep -q -F "$file_watches_string" "$sysctl_file"; then
-    echo "$file_watches_string" | sudo tee -a $sysctl_file
-    sudo sysctl -p # reload the config
+    sysctl_file='/etc/sysctl.conf'
+    file_watches_string='fs.inotify.max_user_watches=1048576'
+
+    if ! grep -q -F "$file_watches_string" "$sysctl_file"; then
+        echo "$file_watches_string" | sudo tee -a $sysctl_file
+        sudo sysctl -p # reload the config
+    fi
+
+    # Install required software
+    sudo apt install -y gnome-software
 fi
-
-# Delete previous installs
-rm -rf ~/.jetbrains
-mkdir -p ~/.jetbrains/software
-
-# Install required software
-sudo apt install -y gnome-software
 
 # Find download link from https://www.jetbrains.com/idea/download/other.html
 
@@ -80,4 +92,3 @@ if [[ "$use_community" == 'true' ]]; then
     ln -s ~/.jetbrains/software/idea-IC* ~/.jetbrains/ideac
 fi
 
-ls -l ~/.jetbrains

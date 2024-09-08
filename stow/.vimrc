@@ -1,4 +1,4 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""               
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "               
 "               ██╗   ██╗██╗███╗   ███╗██████╗  ██████╗
 "               ██║   ██║██║████╗ ████║██╔══██╗██╔════╝
@@ -7,7 +7,7 @@
 "                ╚████╔╝ ██║██║ ╚═╝ ██║██║  ██║╚██████╗
 "                 ╚═══╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝
 "               
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""               
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Disable compatibility with vi which can cause unexpected issues.
 set nocompatible
@@ -113,7 +113,13 @@ call plug#begin()
 
     " https://github.com/tpope/vim-fugitive
     Plug 'tpope/vim-fugitive'
+
+    " https://github.com/bluz71/vim-nightfly-colors
+    Plug 'bluz71/vim-nightfly-colors', { 'as': 'nightfly' }
 call plug#end()
+
+" Set the color scheme.
+colorscheme nightfly
 
 " }}}
 
@@ -226,7 +232,7 @@ if has('gui_running')
     set background=dark
 
     " Set the color scheme.
-    colorscheme molokai
+    colorscheme nightfly
 
     " Set a custom font you have installed on your computer.
     " Syntax: <font_name>\ <weight>\ <size>

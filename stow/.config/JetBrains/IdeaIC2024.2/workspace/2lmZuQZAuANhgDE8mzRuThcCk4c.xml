@@ -1,0 +1,570 @@
+<project version="4">
+  <component name="BookmarksManager">
+    <option name="groups">
+      <GroupState>
+        <option name="name" value="crsj2ee" />
+      </GroupState>
+    </option>
+  </component>
+  <component name="FileEditorManager">
+    <leaf ideFingerprint="3gxbtnu3scc3v" SIDE_TABS_SIZE_LIMIT_KEY="-1">
+      <file>
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider editor-type-id="split-provider[text-editor;markdown-preview-editor]" selected="true">
+            <state split_layout="SHOW_PREVIEW" is_vertical_split="false">
+              <first_editor />
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+        <tab><![CDATA[{"tabTitle":"README.md","foregroundColor":-2104859,"textAttributes":{"name":"a"},"icon":[10,57,99,111,109,46,105,110,116,101,108,108,105,106,46,117,105,46,105,99,111,110,115,46,82,97,115,116,101,114,105,122,101,100,73,109,97,103,101,68,97,116,97,76,111,97,100,101,114,68,101,115,99,114,105,112,116,111,114,18,96,10,24,105,99,111,110,115,47,77,97,114,107,100,111,119,110,80,108,117,103,105,110,46,115,118,103,18,24,105,99,111,110,115,47,101,120,112,117,105,47,109,97,114,107,100,111,119,110,46,115,118,103,26,29,111,114,103,46,105,110,116,101,108,108,105,106,46,112,108,117,103,105,110,115,46,109,97,114,107,100,111,119,110,40,-33,-55,-17,-63,-7,-1,-1,-1,-1,1,48,0]}]]></tab>
+      </file>
+      <file current-in-tab="true">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/idea64.vmoptions">
+          <provider editor-type-id="text-editor" selected="true">
+            <state relative-caret-position="22">
+              <caret line="1" column="28" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+        <tab><![CDATA[{"tabTitle":"idea64.vmoptions","foregroundColor":-2104859,"textAttributes":{"name":"a"},"icon":[10,57,99,111,109,46,105,110,116,101,108,108,105,106,46,117,105,46,105,99,111,110,115,46,82,97,115,116,101,114,105,122,101,100,73,109,97,103,101,68,97,116,97,76,111,97,100,101,114,68,101,115,99,114,105,112,116,111,114,18,73,10,18,102,105,108,101,84,121,112,101,115,47,116,101,120,116,46,115,118,103,18,24,101,120,112,117,105,47,102,105,108,101,84,121,112,101,115,47,116,101,120,116,46,115,118,103,26,12,99,111,109,46,105,110,116,101,108,108,105,106,40,-122,-48,-19,-85,-2,-1,-1,-1,-1,1,48,0]}]]></tab>
+      </file>
+      <file>
+        <entry file="file://$PROJECT_DIR$/Jenkinsfile">
+          <provider editor-type-id="text-editor" selected="true">
+            <state relative-caret-position="3476">
+              <caret line="158" column="4" selection-start-line="158" selection-start-column="4" selection-end-line="158" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+        <tab><![CDATA[{"tabTitle":"Jenkinsfile","foregroundColor":-2104859,"textAttributes":{"name":"a"},"icon":[10,57,99,111,109,46,105,110,116,101,108,108,105,106,46,117,105,46,105,99,111,110,115,46,82,97,115,116,101,114,105,122,101,100,73,109,97,103,101,68,97,116,97,76,111,97,100,101,114,68,101,115,99,114,105,112,116,111,114,18,73,10,18,102,105,108,101,84,121,112,101,115,47,116,101,120,116,46,115,118,103,18,24,101,120,112,117,105,47,102,105,108,101,84,121,112,101,115,47,116,101,120,116,46,115,118,103,26,12,99,111,109,46,105,110,116,101,108,108,105,106,40,-122,-48,-19,-85,-2,-1,-1,-1,-1,1,48,0]}]]></tab>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTypeUsageLocalSummary"><![CDATA[{
+  "data": {
+    "PLAIN_TEXT": {
+      "usageCount": 2,
+      "lastUsed": 1725790880767
+    },
+    "textmate": {
+      "usageCount": 2,
+      "lastUsed": 1725790882101
+    },
+    "Markdown": {
+      "usageCount": 2,
+      "lastUsed": 1725790882281
+    }
+  }
+}]]></component>
+  <component name="GitSEFilterConfiguration">{}</component>
+  <component name="IdeDocumentHistory">
+    <changedPaths>
+      <option value="$PROJECT_DIR$/Jenkinsfile" />
+      <option value="$APPLICATION_CONFIG_DIR$/idea64.vmoptions" />
+    </changedPaths>
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="LanguageUsageStatistics">
+    <language id="Markdown">
+      <summary usageCount="2" lastUsage="1725790882281" />
+    </language>
+    <language id="TEXT">
+      <summary usageCount="2" lastUsage="1725790880783" />
+    </language>
+    <language id="textmate">
+      <summary usageCount="2" lastUsage="1725790882101" />
+    </language>
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" />
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="app-debt-manager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+          <presentation>
+            <attributes />
+            <data iconPath="expui/toolwindows/project.svg" iconPlugin="com.intellij" isLeaf="false" text="app-debt-manager" />
+            <item name="app-debt-manager" type="b2602c69:ProjectViewProjectNode" />
+            <presentation>
+              <attributes>
+                <map>
+                  <entry key="filePath" value="$PROJECT_DIR$" />
+                </map>
+              </attributes>
+              <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="crsj2ee" />
+              <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/.gradle" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/excludeRoot.svg" iconPlugin="com.intellij" isLeaf="false" text=".gradle" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/.gradle}" type="462c0819:PsiDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/.idea" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/folder.svg" iconPlugin="com.intellij" isLeaf="false" text=".idea" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/.idea}" type="462c0819:PsiDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/config" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/folder.svg" iconPlugin="com.intellij" isLeaf="false" text="config" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/config}" type="462c0819:PsiDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/containers" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="containers" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/containers}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/CRSClient" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="CRSClient" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/CRSClient}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/CRSCommon" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="CRSCommon" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/CRSCommon}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/CRSDAO" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="CRSDAO" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/CRSDAO}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/CRSDomain" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="CRSDomain" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/CRSDomain}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/CRSDTO" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="CRSDTO" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/CRSDTO}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/CRSMisc" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="CRSMisc" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/CRSMisc}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/CRSModel" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="CRSModel" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/CRSModel}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/CRSServices" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="CRSServices" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/CRSServices}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/CRSServicesWeb" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="CRSServicesWeb" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/CRSServicesWeb}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/CRSTitaniumTest" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="CRSTitaniumTest" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/CRSTitaniumTest}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/CRSTitaniumWebServices" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="CRSTitaniumWebServices" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/CRSTitaniumWebServices}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/CRSWebservicesClientCore" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="CRSWebservicesClientCore" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/CRSWebservicesClientCore}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/CRSWebServicesMapping" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="CRSWebServicesMapping" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/CRSWebServicesMapping}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/DMBlazeRMA" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="DMBlazeRMA" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/DMBlazeRMA}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/DMFileProcessorDAO" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="DMFileProcessorDAO" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/DMFileProcessorDAO}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/DMFileProcessorWeb" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="DMFileProcessorWeb" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/DMFileProcessorWeb}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/DMFrameworkDAO" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="DMFrameworkDAO" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/DMFrameworkDAO}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/DMRestServices" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="DMRestServices" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/DMRestServices}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/DMRuleFacts" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="DMRuleFacts" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/DMRuleFacts}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/DMSupportToolsWeb" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="DMSupportToolsWeb" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/DMSupportToolsWeb}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/DMTenantAdmin" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/module.svg" iconPlugin="com.intellij" isLeaf="false" text="DMTenantAdmin" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/DMTenantAdmin}" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/gradle" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/nodes/folder.svg" iconPlugin="com.intellij" isLeaf="false" text="gradle" />
+                <item name="dir{file:///home/noble/debtmanager/cloud/crsj2ee/gradle}" type="462c0819:PsiDirectoryNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/.editorconfig" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/fileTypes/editorConfig.svg" iconPlugin="com.intellij" isLeaf="true" text=".editorconfig" />
+                <item name=".editorconfig" type="ab9368bb:PsiFileNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/.gitattributes" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/fileTypes/text.svg" iconPlugin="com.intellij" isLeaf="true" text=".gitattributes" />
+                <item name=".gitattributes" type="ab9368bb:PsiFileNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/.gitignore" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/fileTypes/ignored.svg" iconPlugin="com.intellij" isLeaf="true" text=".gitignore" />
+                <item name=".gitignore" type="ab9368bb:PsiFileNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/build.gradle" />
+                  </map>
+                </attributes>
+                <data iconPath="icons/expui/gradle.svg" iconPlugin="com.intellij.gradle" isLeaf="true" text="build.gradle" />
+                <item name="build.gradle" type="ab9368bb:PsiFileNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/gradle.properties" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/fileTypes/properties.svg" iconPlugin="com.intellij" isLeaf="true" text="gradle.properties" />
+                <item name="gradle.properties" type="ab9368bb:PsiFileNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/gradlew" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/fileTypes/shell.svg" iconPlugin="com.intellij" isLeaf="true" text="gradlew" />
+                <item name="gradlew" type="ab9368bb:PsiFileNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/gradlew.bat" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/fileTypes/text.svg" iconPlugin="com.intellij" isLeaf="true" text="gradlew.bat" />
+                <item name="gradlew.bat" type="ab9368bb:PsiFileNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/javagradlew.sh" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/fileTypes/shell.svg" iconPlugin="com.intellij" isLeaf="true" text="javagradlew.sh" />
+                <item name="javagradlew.sh" type="ab9368bb:PsiFileNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/Jenkinsfile" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/fileTypes/text.svg" iconPlugin="com.intellij" isLeaf="true" text="Jenkinsfile" />
+                <item name="Jenkinsfile" type="ab9368bb:PsiFileNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/polaris.yml" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/fileTypes/yaml.svg" iconPlugin="com.intellij" isLeaf="true" text="polaris.yml" />
+                <item name="polaris.yml" type="ab9368bb:PsiFileNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/publish.sh" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/fileTypes/shell.svg" iconPlugin="com.intellij" isLeaf="true" text="publish.sh" />
+                <item name="publish.sh" type="ab9368bb:PsiFileNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/README.md" />
+                  </map>
+                </attributes>
+                <data iconPath="icons/expui/markdown.svg" iconPlugin="org.intellij.plugins.markdown" isLeaf="true" text="README.md" />
+                <item name="README.md" type="ab9368bb:PsiFileNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/settings.gradle" />
+                  </map>
+                </attributes>
+                <data iconPath="icons/expui/gradle.svg" iconPlugin="com.intellij.gradle" isLeaf="true" text="settings.gradle" />
+                <item name="settings.gradle" type="ab9368bb:PsiFileNode" />
+              </presentation>
+              <presentation>
+                <attributes>
+                  <map>
+                    <entry key="filePath" value="$PROJECT_DIR$/sonar-project.properties" />
+                  </map>
+                </attributes>
+                <data iconPath="expui/fileTypes/properties.svg" iconPlugin="com.intellij" isLeaf="true" text="sonar-project.properties" />
+                <item name="sonar-project.properties" type="ab9368bb:PsiFileNode" />
+              </presentation>
+            </presentation>
+            <presentation>
+              <attributes />
+              <data iconPath="expui/nodes/library.svg" iconPlugin="com.intellij" isLeaf="false" text="External Libraries" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </presentation>
+            <presentation>
+              <attributes />
+              <data iconPath="expui/fileTypes/scratches.svg" iconPlugin="com.intellij" isLeaf="false" text="Scratches and Consoles" />
+              <item name="Scratches and Consoles" type="b85a3e1f:ScratchTreeStructureProvider$MyProjectNode" />
+            </presentation>
+          </presentation>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="ToolWindowManager">
+    <layoutV2>
+      <window_info content_ui="combo" id="Project" order="0" weight="0.17131083" />
+      <window_info active="true" id="Commit" order="1" visible="true" weight="0.17131083" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="Problems" order="1" />
+      <window_info anchor="bottom" id="Problems View" order="2" />
+      <window_info anchor="bottom" id="Terminal" order="3" />
+      <window_info anchor="bottom" id="Services" order="4" />
+      <window_info anchor="bottom" id="Build" order="5" />
+      <window_info anchor="right" content_ui="combo" id="Notifications" order="0" weight="0.25" />
+      <window_info anchor="right" id="AIAssistant" order="1" weight="0.25" />
+      <window_info anchor="right" id="Database" order="2" weight="0.25" />
+      <window_info anchor="right" id="Gradle" order="3" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="4" weight="0.25" />
+      <unified_weights left="0.17131083" />
+    </layoutV2>
+    <recentWindows>
+      <value>Commit</value>
+      <value>Project</value>
+    </recentWindows>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="154" y="2" key="MergeDialog" timestamp="1725787578672">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="154" y="2" key="MergeDialog/0.0.2560.1440@0.0.2560.1440" timestamp="1725787578672" />
+    <state x="828" y="382" key="MultipleFileMergeDialog" timestamp="1725787578673">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="828" y="382" key="MultipleFileMergeDialog/0.0.2560.1440@0.0.2560.1440" timestamp="1725787578673" />
+    <state x="0" y="0" key="SettingsEditor" timestamp="1725787455188">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="0" y="0" key="SettingsEditor/0.0.2560.1440@0.0.2560.1440" timestamp="1725787455188" />
+    <state x="810" y="343" key="Vcs.Push.Dialog.v2" timestamp="1725788718648">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="810" y="343" key="Vcs.Push.Dialog.v2/0.0.2560.1440@0.0.2560.1440" timestamp="1725788718648" />
+    <state x="911" y="396" width="672" height="696" key="search.everywhere.popup" timestamp="1725790323675">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="911" y="396" width="672" height="696" key="search.everywhere.popup/0.0.2560.1440@0.0.2560.1440" timestamp="1725790323675" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/idea64.vmoptions">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="1" column="28" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Jenkinsfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3476">
+          <caret line="158" column="4" selection-start-line="158" selection-start-column="4" selection-end-line="158" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SHOW_PREVIEW" is_vertical_split="false">
+          <first_editor />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI" />
+      <state key="GlobalLibrariesConfigurable.UI" />
+      <state key="JdkListConfigurable.UI" />
+      <state key="ModuleStructureConfigurable.UI" />
+      <state key="ProjectLibrariesConfigurable.UI" />
+    </states>
+  </component>
+</project>
