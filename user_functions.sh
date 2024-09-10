@@ -252,8 +252,8 @@ function runFitLogic {
 	echo ">>> Running Fit Logic Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
 	command="$CONTAINER_RUNTIME run -d --name $contianerName \
 		-p 443:8443 \
-		--env-file $HOME/debtmanager/smarts/smarts.env.settings \
-		-v $HOME/debtmanager/smarts/data:/var/opt/sl/data \
+		--env-file $HOME/debtmanager/fs/tenant1/dmfs/smarts.env.settings \
+		-v $HOME/debtmanager/fs/tenant1/dmfs/fl_init_repo:/var/opt/sl/data \
 		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
 	eval $command
 }
