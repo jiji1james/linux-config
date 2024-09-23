@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Checkout Debt Manager Code
+# Function to checkout/update git repository
 function checkoutGitRepository {
     repoName=$1
     parentPath=$2
@@ -25,14 +25,16 @@ function checkoutGitRepository {
     echo ""
 }
 
-echo ""
+echo "------------------------------------------------------------"
 read -p "Checkout Callout Services (Y/N): " coscheckout
 read -p "Checkout Communicator (Y/N): " commcheckout
 read -p "Checkout Debt Manager for Cloud (Y/N): " cloudcheckout
 read -p "Checkout Debt Manager for OnPrem (Y/N): " onpremcheckout
 read -p "Checkout Debt Manager Runtime Tools (Y/N): " toolscheckout
 read -p "Checkout Debt Manager Libraries (Y/N): " libcheckout
+echo "------------------------------------------------------------"
 
+echo ""
 if [[ "$coscheckout" == "Y" ]]; then
 	echo ">>> Checkout Callout Services Code"
 	mkdir -p $HOME/crs/cos

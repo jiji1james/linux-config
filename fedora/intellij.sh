@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-idea_version='2024.2.1'
+idea_version='2024.2.2'
 use_ultimate='false'
 use_community='false'
 remove_existing='false'
 
 help_message() {
   echo
-  echo "Usage: $(basename $0) [-v 2024.2.0.2] [-u] [-c] [-r] [-h]"
+  echo "Usage: $(basename $0) [-v $idea_version] [-u] [-c] [-r] [-h]"
   echo "options:"
   echo "h     Print the Help Message."
   echo "v     Intellij Version."
@@ -45,12 +45,12 @@ while getopts ':v:curh' opt; do
       ;;
 
     :)
-      echo -e "Option requires an argument.\nUsage: $(basename $0) [-v 2024.2.0.2] [-u] [-h]"
+      echo -e "Option requires an argument.\nUsage: $(basename $0) [-v $idea_version] [-u] [-h]"
       exit 1
       ;;
 
     ?)
-      echo -e "Invalid command option.\nUsage: $(basename $0) [-v 2024.2.0.2] [-u] [-h]"
+      echo -e "Invalid command option.\nUsage: $(basename $0) [-v $idea_version] [-u] [-h]"
       exit 1
       ;;
   esac
