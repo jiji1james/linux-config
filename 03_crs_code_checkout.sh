@@ -32,6 +32,7 @@ read -p "Checkout Debt Manager for Cloud (Y/N): " cloudcheckout
 read -p "Checkout Debt Manager for OnPrem (Y/N): " onpremcheckout
 read -p "Checkout Debt Manager Runtime Tools (Y/N): " toolscheckout
 read -p "Checkout Debt Manager Libraries (Y/N): " libcheckout
+read -p "Checkout Debt Manager Tenant Admin (Y/N): " tacheckout
 echo "------------------------------------------------------------"
 
 echo ""
@@ -90,6 +91,14 @@ if [[ "$libcheckout" == "Y" ]]; then
 	checkoutGitRepository dm-authentication-provider $HOME/debtmanager
 	checkoutGitRepository dm-integration-epp-img $HOME/debtmanager
 	checkoutGitRepository dm-dev-tools $HOME/debtmanager
+fi
+
+echo ""
+if [[ "$tacheckout" == "Y" ]]; then
+	mkdir -p $HOME/debtmanager/ta
+	echo ">>> Checkout Debt Manager Tenant Admin"
+	checkoutGitRepository dm-tenant-admin-service $HOME/debtmanager/ta
+	checkoutGitRepository dm-tenant-admin-ui $HOME/debtmanager/ta
 fi
 
 echo ">>> Code Checkout Completed!!!"
