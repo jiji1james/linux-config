@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-idea_version='2024.2.2'
+idea_version='2024.2.3'
 use_ultimate='false'
 use_community='false'
 remove_existing='false'
@@ -45,50 +45,60 @@ while getopts ':v:curh' opt; do
       ;;
 
     :)
-      echo -e "Option requires an argument.\nUsage: $(basename $0) [-v $idea_version] [-u] [-h]"
+      echo "Option -$OPTARG requires and argument"
+      help_message
       exit 1
       ;;
-
-    ?)
-      echo -e "Invalid command option.\nUsage: $(basename $0) [-v $idea_version] [-u] [-h]"
+    \?)
+      echo "Invalid command option -$OPTARG"
+      help_message
       exit 1
       ;;
   esac
 done
-shift "$(($OPTIND -1))"
+shift $(($OPTIND -1))
 
 if [[ "$remove_existing" == 'true' ]]; then
-    # Delete previous installs
-    rm -rf ~/.jetbrains
+    echo ">>> Deleting exiting install"
+    sudo rm -rf /opt/jetbrains/ideac
+    sudo rm -rf /opt/jetbrains/idea-IC*
 else
-    mkdir -p ~/.jetbrains/software
-
     sysctl_file='/etc/sysctl.conf'
     file_watches_string='fs.inotify.max_user_watches=1048576'
 
     if ! grep -q -F "$file_watches_string" "$sysctl_file"; then
         echo "$file_watches_string" | sudo tee -a $sysctl_file
         sudo sysctl -p # reload the config
+        # Install required software
+        sudo dnf install -y gnome-software
     fi
-
-    # Install required software
-sudo dnf install -y gnome-software
 fi
 
 # Find download link from https://www.jetbrains.com/idea/download/other.html
 
 if [[ "$use_ultimate" == 'true' ]]; then
-    wget https://download.jetbrains.com/idea/ideaIU-$idea_version.tar.gz -P ~/.jetbrains
-    tar -zxvf ~/.jetbrains/ideaIU-$idea_version.tar.gz -C ~/.jetbrains/software
-    rm -f ~/.jetbrains/ideaIU-$idea_version.tar.gz 
-    ln -s ~/.jetbrains/software/idea-IU* ~/.jetbrains/ideau
+    echo ">>> Installing ultimate version of Intellij $idea_version in /opt"
+
+    wget https://download.jetbrains.com/idea/ideaIU-$idea_version.tar.gz -P ~
+
+    sudo mkdir -p /opt/jetbrains/
+    sudo mv ~/ideaIU-$idea_version.tar.gz /opt/jetbrains
+    sudo tar -zxvf /opt/jetbrains/ideaIU-$idea_version.tar.gz -C /opt/jetbrains
+    sudo rm -f /opt/jetbrains/ideaIU-$idea_version.tar.gz 
+    sudo ln -s /opt/jetbrains/idea-IU* /opt/jetbrains/ideau
 fi
 
 if [[ "$use_community" == 'true' ]]; then
-    wget https://download.jetbrains.com/idea/ideaIC-$idea_version.tar.gz -P ~/.jetbrains
-    tar -zxvf ~/.jetbrains/ideaIC-$idea_version.tar.gz -C ~/.jetbrains/software
-    rm -f ~/.jetbrains/ideaIC-$idea_version.tar.gz 
-    ln -s ~/.jetbrains/software/idea-IC* ~/.jetbrains/ideac
+    echo ">>> Installing community version of Intellij $idea_version in /opt"
+
+    wget https://download.jetbrains.com/idea/ideaIC-$idea_version.tar.gz -P ~
+
+    sudo mkdir -p /opt/jetbrains/
+    sudo mv ~/ideaIC-$idea_version.tar.gz /opt/jetbrains
+    sudo tar -zxvf /opt/jetbrains/ideaIC-$idea_version.tar.gz -C /opt/jetbrains
+    sudo rm -f /opt/jetbrains/ideaIC-$idea_version.tar.gz 
+    sudo ln -s /opt/jetbrains/idea-IC* /opt/jetbrains/ideac
 fi
 
-ls -l ~/.jetbrains
+ls -l /opt/jetbrains
+

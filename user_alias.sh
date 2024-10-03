@@ -41,4 +41,4 @@ alias tomcat='cd $TOMCAT_HOME'
 alias jboss='cd $JBOSS_HOME'
 
 #alias ideau="~/.jetbrains/ideau/bin/idea > /dev/null 2>&1 &"
-alias ideac="~/.jetbrains/ideac/bin/idea > /dev/null 2>&1 &"
+alias ideac="/opt/jetbrains/ideac/bin/idea > /dev/null 2>&1 &"

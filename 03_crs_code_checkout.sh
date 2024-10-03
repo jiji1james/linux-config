@@ -38,16 +38,16 @@ echo "------------------------------------------------------------"
 echo ""
 if [[ "$coscheckout" == "Y" ]]; then
 	echo ">>> Checkout Callout Services Code"
-	mkdir -p $HOME/crs/cos
-	checkoutGitRepository callout-service $HOME/crs/cos
+	mkdir -p $HOME/crs-apps/cos
+	checkoutGitRepository callout-service $HOME/crs-apps/cos
 fi
 
 echo ""
 if [[ "$commcheckout" == "Y" ]]; then
 	echo ">>> Checkout Communicator Code"
-	mkdir -p $HOME/crs/comm
-	checkoutGitRepository cnr-comm-service $HOME/crs/comm
-	checkoutGitRepository cnr-comm-ui $HOME/crs/comm
+	mkdir -p $HOME/crs-apps/comm
+	checkoutGitRepository cnr-comm-service $HOME/crs-apps/comm
+	checkoutGitRepository cnr-comm-ui $HOME/crs-apps/comm
 fi
 
 echo ""
@@ -87,10 +87,11 @@ fi
 echo ""
 if [[ "$libcheckout" == "Y" ]]; then
 	echo ">>> Checkout Debt Manager Libraries"
-	checkoutGitRepository dm-framework-core $HOME/debtmanager
-	checkoutGitRepository dm-authentication-provider $HOME/debtmanager
-	checkoutGitRepository dm-integration-epp-img $HOME/debtmanager
-	checkoutGitRepository dm-dev-tools $HOME/debtmanager
+	mkdir -p $HOME/debtmanager/library
+	checkoutGitRepository dm-framework-core $HOME/debtmanager/library
+	checkoutGitRepository dm-authentication-provider $HOME/debtmanager/library
+	checkoutGitRepository dm-integration-epp-img $HOME/debtmanager/library
+	checkoutGitRepository dm-dev-tools $HOME/debtmanager/library
 fi
 
 echo ""
