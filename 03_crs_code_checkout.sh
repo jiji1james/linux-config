@@ -28,6 +28,7 @@ function checkoutGitRepository {
 echo "------------------------------------------------------------"
 read -p "Checkout Callout Services (Y/N): " coscheckout
 read -p "Checkout Communicator (Y/N): " commcheckout
+read -p "Checkout Batch Process Orchestator (Y/N): " bpocheckout
 read -p "Checkout Debt Manager for Cloud (Y/N): " cloudcheckout
 read -p "Checkout Debt Manager for OnPrem (Y/N): " onpremcheckout
 read -p "Checkout Debt Manager Runtime Tools (Y/N): " toolscheckout
@@ -48,6 +49,14 @@ if [[ "$commcheckout" == "Y" ]]; then
 	mkdir -p $HOME/crs-apps/comm
 	checkoutGitRepository cnr-comm-service $HOME/crs-apps/comm
 	checkoutGitRepository cnr-comm-ui $HOME/crs-apps/comm
+fi
+
+echo ""
+if [[ "$bpocheckout" == "Y" ]]; then
+	echo ">>> Checkout Batch Process Orchestrator Code"
+	mkdir -p $HOME/debtmanager/bpo
+	checkoutGitRepository bpo-services $HOME/debtmanager/bpo
+	checkoutGitRepository bpo-ui $HOME/debtmanager/bpo
 fi
 
 echo ""
