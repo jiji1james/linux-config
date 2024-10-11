@@ -1,4 +1,5 @@
 # Setup a new WSL2 Instance with Fedora
+https://scottspence.com/posts/wsl-web-developer-setup-with-fedora-39
 
 ## Download the rootfs file
 A search for “fedora container base” will point to this URL: https://koji.fedoraproject.org/koji/packageinfo?packageID=26387. 
@@ -67,3 +68,10 @@ Open a new Powershell window and execute the below command
 ```
 wsl -s Fedora
 ```
+
+## Install WSL Utilities
+```
+sudo dnf copr enable wslutilities/wslu -y
+sudo dnf install wslu -y
+```
+
