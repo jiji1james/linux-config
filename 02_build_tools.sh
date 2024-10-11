@@ -21,3 +21,7 @@ sdk install java 21.0.4-amzn
 
 sdk install ant 1.9.15
 sdk install maven 3.9.6
+sdk install gradle
+
+# Install diffsofancy
+brew install diff-so-fancy
