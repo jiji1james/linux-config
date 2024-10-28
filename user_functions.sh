@@ -98,16 +98,17 @@ function gwNoCache {
 
 # Set Java Home
 function setJavaHome {
-	version=$1
-	if [[ -z $version ]]
-	then
-		version = "8"
-	fi
+	# version=$1
+	# if [[ -z $version ]]
+	# then
+	# 	version = "8"
+	# fi
 
-	export JAVA_HOME="$HOME/java/jdk$version"
+	# export JAVA_HOME="$HOME/java/jdk$version"
 
-	echo ">>> Java Home set as $JAVA_HOME"
-	export PATH="$JAVA_HOME/bin:$OLD_PATH"
+	# echo ">>> Java Home set as $JAVA_HOME"
+	# export PATH="$JAVA_HOME/bin:$OLD_PATH"
+	echo ">>> sdk use java <version>"
 }
 
 # Set Container Runtime
