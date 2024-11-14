@@ -183,6 +183,11 @@ function stopTomcat {
 	killProcess "tomcat"
 }
 
+# Recursive dos2unix
+function dos2unixRecurse {
+	find . -type f -exec dos2unix {} +
+}
+
 # Sql Server Docker
 function runSqlServer {
 	containerVersion=$1
@@ -237,8 +242,8 @@ function runArtemis {
 	eval $command
 }
 
-# FitLogic Docker
-function runFitLogic {
+# FitLogic Primary Container - Cloud Version
+function runCloudFitLogic {
 	containerVersion=$1
 	if [[ -z $containerVersion ]]
 	then
@@ -258,6 +263,52 @@ function runFitLogic {
 		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
 	eval $command
 }
+
+# FitLogic Primary Container - OnPrem Version
+function runOnPremFitLogicPrimary {
+	containerVersion=$1
+	if [[ -z $containerVersion ]]
+	then
+		containerVersion='vienna.8.2-ubuntu'
+	fi
+	contianerName="dm-smarts-$containerVersion"
+	
+	echo ">>> Deleting running contianer: $contianerName"
+	command="$CONTAINER_RUNTIME rm -f $contianerName"
+	eval $command
+
+	echo ">>> Running Fit Logic Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
+	command="$CONTAINER_RUNTIME run -d --name $contianerName \
+		-p 443:8443 \
+		--env-file $HOME/debtmanager/fs/dflttnt/dmfs/fitlogic/smarts.env.settings \
+		-v $HOME/debtmanager/fs/dflttnt/dmfs/fitlogic:/var/opt/sl/data \
+		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
+	eval $command
+}
+
+# FitLogic File Container - OnPrem Version
+function runOnPremFitLogicFileContainer {
+	containerVersion=$1
+	if [[ -z $containerVersion ]]
+	then
+		containerVersion='vienna.8.2-alpine'
+	fi
+	contianerName="dm-smarts-$containerVersion"
+	
+	echo ">>> Deleting running contianer: $contianerName"
+	command="$CONTAINER_RUNTIME rm -f $contianerName"
+	eval $command
+
+	echo ">>> Running Fit Logic Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
+	command="$CONTAINER_RUNTIME run -d --name $contianerName \
+		-p 8081:80 \
+		--env sl_enabledeploymentmonitor="true" \
+		-v $HOME/debtmanager/fs/dflttnt/dmfs/fitlogic/smartd:/app/data \
+		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
+	eval $command
+}
+
+# docker run -v "${PWD}:/smartsd:/app/data" --env sl_enabledeploymentmonitor="true" -d --name smarts-file-instance1 -p 8081:80 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:vienna.8.3-alpine
 
 # DM Rest Docker
 function runDmRest {
