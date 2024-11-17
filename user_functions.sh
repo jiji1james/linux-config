@@ -41,13 +41,6 @@ export TOMCAT_HOME="$DM_HOME/dm-tomcat/apache-tomcat"
 export JBOSS_HOME="$DM_HOME/dm-jboss/jboss-eap"
 export FS_HOME="$DM_HOME/fs"
 
-# Delete all Git Branches except master and develop
-function gitCleanBranches {
-    echo "Branches to delete:"
-    git branch | grep -v master
-	git branch | grep -v master | xargs git branch -D
-}
-
 # Execute Git Command Recursively in sub folders
 function rgit {
 	dirs -c				# Clear the pushd stack
@@ -61,6 +54,33 @@ function rgit {
 		then
 			pushd $dir
 			git $*
+			popd
+		else
+			echo "Skipping $dir"
+		fi
+	done
+}
+
+# Delete all Git Branches except master and develop
+function gitCleanBranches {
+    echo "Branches to delete:"
+    git branch | grep -v master
+	git branch | grep -v master | xargs git branch -D
+}
+
+# Execute Git Clean Branches Recursively in sub folders
+function gitCleanBranchesRecurse {
+    dirs -c				# Clear the pushd stack
+	for dir in ./*/     # list directories in the form "/tmp/dirname/"
+	do
+		dir=${dir%*/}
+		echo ""
+		echo ">>>> Working on: ${dir} <<<<"
+		echo ""	
+		if [ -d "${dir}/.git" ]
+		then
+			pushd $dir
+			gitCleanBranches  # Call the existing gitCleanBranches function
 			popd
 		else
 			echo "Skipping $dir"
