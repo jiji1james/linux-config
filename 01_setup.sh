@@ -5,7 +5,7 @@ source /etc/os-release
 echo ">>>> Linux OS Release: $PRETTY_NAME"
 
 # Set Flags
-if [[ $PRETTY_NAME == *"Ubuntu"* ]]; then
+if [[ $PRETTY_NAME == *"Ubuntu"* || $PRETTY_NAME == *"Kali"* ]]; then
 	export IS_UBUNTU=true
 	export IS_FEDORA=false
 	export IS_SUSE=false
@@ -20,9 +20,9 @@ elif [[ $PRETTY_NAME == *"openSUSE"* ]]; then
 fi
 
 echo ""
-echo "IS_UBUNTU		: $IS_UBUNTU"
-echo "IS_FEDORA		: $IS_FEDORA"
-echo "IS_SUSE		: $IS_SUSE"
+echo "UBUNTU	: $IS_UBUNTU"
+echo "FEDORA	: $IS_FEDORA"
+echo "SUSE : $IS_SUSE"
 
 # Add Zscalar certs
 echo ""
