@@ -13,8 +13,11 @@ if ! grep -q -F "$file_watches_string" "$sysctl_file"; then
         sudo sysctl -p # reload the config
 fi
 
-# Find download link from https://www.jetbrains.com/idea/download/other.html
-sudo apt install -y libfuse2
+# Install required software
+sudo apt install -y gnome-software libfuse2
+
+# Find download link & version from https://www.jetbrains.com/toolbox-app/download/other.html
+version="2.5.2.35332"
 
 # Remove existing
 rm -rf ~/.jetbrains/software/toolbox
@@ -22,8 +25,7 @@ mkdir -p ~/.jetbrains/software/toolbox
 
 # Download new
 cd ~/.jetbrains/software/toolbox
-wget https://download.jetbrains.com/toolbox/jetbrains-toolbox-2.4.2.32922.tar.gz
-tar -xzvf jetbrains-toolbox-2.4.2.32922.tar.gz -C .
-ln -sf ~/.jetbrains/software/toolbox/jetbrains-toolbox-2.4.2.32922 ~/.jetbrains/jetbrains-toolbox
-rm -f ~/.jetbrains/software/toolbox/jetbrains-toolbox-2.4.2.32922.tar.gz
-
+wget "https://download.jetbrains.com/toolbox/jetbrains-toolbox-$version.tar.gz"
+tar -xzvf "jetbrains-toolbox-$version.tar.gz" -C .
+ln -sf ~/.jetbrains/software/toolbox/jetbrains-toolbox-$version ~/.jetbrains/jetbrains-toolbox
+rm -f "jetbrains-toolbox-$version.tar.gz"

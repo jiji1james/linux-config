@@ -14,6 +14,7 @@ alias du='du -h'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
+alias ll='ls -la'
 
 # Liven up the console for common commands
 alias grep='grep --color'
@@ -42,3 +43,4 @@ alias jboss='cd $JBOSS_HOME'
 
 alias toolbox="~/.jetbrains/jetbrains-toolbox/jetbrains-toolbox > /dev/null 2>&1 &"
 alias ideac="~/.jetbrains/ideac/bin/idea > /dev/null 2>&1 &"
+alias ideau="~/.jetbrains/ideau/bin/idea > /dev/null 2>&1 &"

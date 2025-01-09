@@ -1,77 +1,9 @@
 #!/usr/bin/env bash
 
-idea_version='2024.3'
-use_ultimate='false'
-use_community='false'
-remove_existing='false'
-install_idea='false'
+idea_version='2024.3.1.1'
+use_ultimate='true'
+use_community='true'
 
-help_message() {
-	echo
-	echo "Usage: $(basename $0) [-v 2024.2.0.2] [-u] [-c] [-r] [-h]"
-	echo "options:"
-	echo "h     Print the Help Message."
-	echo "v     Intellij Version."
-	echo "u     Use Ultimate Version."
-	echo "c     Use Community Version."
-	echo "r     Remove exising install."
-	echo
-}
-
-# Add this check before the while loop
-if [ $# -eq 0 ]; then
-    help_message
-    exit 1
-fi
-
-while getopts ':v:curh' opt; do
-	case "$opt" in
-		v)
-			build_version="$OPTARG"
-			echo "Using Build Number = ${OPTARG}"
-			;;
-
-		u)
-			use_ultimate='true'
-			echo "Using Intellij Ultimate Version"
-			;;
-
-		c)
-			use_community='true'
-			echo "Using Intellij Community Version"
-			;;
-
-		r)
-			remove_existing='true'
-			echo "Removing existing Intellij from $HOME/.jetbrains"
-			;;
-
-		h)
-			help_message
-			exit 1
-			;;
-
-		:)
-			echo -e "Option requires an argument.\nUsage: $(basename $0) [-v 2024.2.0.2] [-u] [-h]"
-			exit 1
-			;;
-
-		?)
-			echo -e "Invalid command option.\nUsage: $(basename $0) [-v 2024.2.0.2] [-u] [-h]"
-			exit 1
-			;;
-	esac
-done
-shift "$(($OPTIND -1))"
-
-if [[ "$remove_existing" == 'true' ]]; then
-	# Delete previous installs
-	rm -rf ~/.jetbrains/software
-
-	# Exit after removing
-	echo "Existing installs removed."
-	exit 0
-fi
 
 if [[ "$use_ultimate" == 'true' || "$use_community" == 'true' ]]; then
 	mkdir -p ~/.jetbrains/software
