@@ -35,6 +35,9 @@ alias dos2unix-recurse="find . -type f -exec dos2unix '{}' '+'"
 export WSL_IP=$(wsl-ip-addr)
 export HOST_IP=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf)
 
+export CODE_SIGN_TOOL_HOME="$HOME/tools/CodeSignTool-v1.3.2-linux"
+export PATH="$CODE_SIGN_TOOL_HOME:$PATH"
+
 alias dm='cd $DM_HOME'
 alias cloud='cd $DM_HOME/cloud'
 alias onprem='cd $DM_HOME/onprem'
