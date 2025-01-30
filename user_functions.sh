@@ -131,6 +131,44 @@ function setJavaHome {
 	echo ">>> sdk use java <version>"
 }
 
+function print_usage_j() {
+    VERSIONS=$(\ls $SDKMAN_DIR/candidates/java | \grep -v current | \awk -F'.' '{print $1}' | \sort -nr | \uniq)
+    CURRENT=$(\basename $(\readlink $JAVA_HOME || \echo $JAVA_HOME) | \awk -F'.' '{print $1}')
+    \echo "Available versions: "
+    \echo "$VERSIONS"
+    \echo "Current: $CURRENT"
+    \echo "Usage: j <java_version>"
+}
+
+function j() {
+  if [[ $# -eq 1 ]]; then
+    VERSION_NUMBER=$1
+    IDENTIFIER=$(\ls $SDKMAN_DIR/candidates/java | \grep -v current | \grep "^$VERSION_NUMBER." | \sort -r | \head -n 1)
+    sdk use java $IDENTIFIER
+  else
+    print_usage_j
+  fi
+}
+
+# Set Debt Manager Environment
+function setDmEnvironment {
+	version=$1
+	if [[ -z $version ]]
+	then
+		version="cloud"
+	fi
+
+	export DM_VERSION=$version
+	if [[ $version == "cloud" ]]; then
+		export DM_HOME=$HOME/debtmanager/$version
+	else
+		export DM_HOME=$HOME/debtmanager/onprem/$DM_VERSION
+	fi
+
+	# Set Java Home
+	j 8
+}
+
 # Set Container Runtime
 function setContainerRuntime {
 	runtime=$1
@@ -289,21 +327,19 @@ function runOnPremFitLogicPrimary {
 	containerVersion=$1
 	if [[ -z $containerVersion ]]
 	then
-		containerVersion='vienna.8.2-ubuntu'
+		containerVersion='washington.0.0-ubuntu'
 	fi
-	contianerName="dm-smarts-$containerVersion"
+	contianerName="fl-onprem-primary"
 	
 	echo ">>> Deleting running contianer: $contianerName"
-	command="$CONTAINER_RUNTIME rm -f $contianerName"
-	eval $command
+	docker rm -f $contianerName
 
 	echo ">>> Running Fit Logic Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
-	command="$CONTAINER_RUNTIME run -d --name $contianerName \
+	docker run -d --name $contianerName \
 		-p 443:8443 \
-		--env-file $HOME/debtmanager/fs/dflttnt/dmfs/fitlogic/smarts.env.settings \
-		-v $HOME/debtmanager/fs/dflttnt/dmfs/fitlogic:/var/opt/sl/data \
-		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
-	eval $command
+		--env-file $DM_HOME/fs/dflttnt/dmfs/fitlogic/smarts.env.settings \
+		-v $DM_HOME/fs/dflttnt/dmfs/fitlogic/repo:/var/opt/sl/data \
+		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion
 }
 
 # FitLogic File Container - OnPrem Version
@@ -311,24 +347,20 @@ function runOnPremFitLogicFileContainer {
 	containerVersion=$1
 	if [[ -z $containerVersion ]]
 	then
-		containerVersion='vienna.8.2-alpine'
+		containerVersion='washington.0.0-alpine'
 	fi
-	contianerName="dm-smarts-$containerVersion"
+	contianerName="fl-onprem-file-instance1"
 	
 	echo ">>> Deleting running contianer: $contianerName"
-	command="$CONTAINER_RUNTIME rm -f $contianerName"
-	eval $command
+	docker rm -f $contianerName
 
 	echo ">>> Running Fit Logic Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
-	command="$CONTAINER_RUNTIME run -d --name $contianerName \
-		-p 8081:80 \
+	docker run -d --name $contianerName \
+		-p 8081:8080 \
 		--env sl_enabledeploymentmonitor="true" \
-		-v $HOME/debtmanager/fs/dflttnt/dmfs/fitlogic/smartd:/app/data \
-		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
-	eval $command
+		-v $DM_HOME/fs/dflttnt/dmfs/fitlogic/smartd:/app/data \
+		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion
 }
-
-# docker run -v "${PWD}:/smartsd:/app/data" --env sl_enabledeploymentmonitor="true" -d --name smarts-file-instance1 -p 8081:80 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:vienna.8.3-alpine
 
 # DM Rest Docker
 function runDmRest {
