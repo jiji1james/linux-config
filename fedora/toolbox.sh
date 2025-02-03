@@ -14,7 +14,7 @@ if ! grep -q -F "$file_watches_string" "$sysctl_file"; then
 fi
 
 # Find download link from https://www.jetbrains.com/idea/download/other.html
-sudo dnf install -y libfuse2
+sudo dnf install -y libfuse2 fuse fuse-libs
 
 # Remove existing
 rm -rf ~/.jetbrains/software/toolbox

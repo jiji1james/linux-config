@@ -18,3 +18,6 @@ sdk install gradle
 
 # Install diffsofancy
 brew install diff-so-fancy
+
+# Install node
+brew install node

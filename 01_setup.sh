@@ -20,9 +20,9 @@ elif [[ $PRETTY_NAME == *"openSUSE"* ]]; then
 fi
 
 echo ""
-echo "UBUNTU	: $IS_UBUNTU"
-echo "FEDORA	: $IS_FEDORA"
-echo "SUSE : $IS_SUSE"
+echo "UBUNTU  : $IS_UBUNTU"
+echo "FEDORA  : $IS_FEDORA"
+echo "SUSE    : $IS_SUSE"
 
 # Add Zscalar certs
 echo ""
