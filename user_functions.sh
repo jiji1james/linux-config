@@ -358,7 +358,7 @@ function runOnPremFitLogicFileContainer {
 	docker run -d --name $contianerName \
 		-p 8081:8080 \
 		--env sl_enabledeploymentmonitor="true" \
-		-v $DM_HOME/fs/dflttnt/dmfs/fitlogic/smartd:/app/data \
+		-v $DM_HOME/fs/dflttnt/dmfs/fitlogic/smartd/container1:/app/data \
 		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion
 }
 
