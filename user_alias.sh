@@ -14,15 +14,15 @@ alias du='du -h'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
+
+# ls aliases
+alias ls='ls -hF --color=auto --time-style=long-iso --group-directories-first'
 alias ll='ls -la'
 
 # Liven up the console for common commands
 alias grep='grep --color'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
-
-# List directory names before file names like DOS
-alias dir='ls -lahF --color=tty --time-style=long-iso --group-directories-first'
 
 # Setup tools
 export CONTAINER_RUNTIME="docker"

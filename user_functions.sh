@@ -131,22 +131,22 @@ function setJavaHome {
 	echo ">>> sdk use java <version>"
 }
 
-function print_usage_j() {
+function print_usage_jdk() {
     VERSIONS=$(\ls $SDKMAN_DIR/candidates/java | \grep -v current | \awk -F'.' '{print $1}' | \sort -nr | \uniq)
     CURRENT=$(\basename $(\readlink $JAVA_HOME || \echo $JAVA_HOME) | \awk -F'.' '{print $1}')
     \echo "Available versions: "
     \echo "$VERSIONS"
     \echo "Current: $CURRENT"
-    \echo "Usage: j <java_version>"
+    \echo "Usage: jdk <java_version>"
 }
 
-function j() {
+function jdk() {
   if [[ $# -eq 1 ]]; then
     VERSION_NUMBER=$1
     IDENTIFIER=$(\ls $SDKMAN_DIR/candidates/java | \grep -v current | \grep "^$VERSION_NUMBER." | \sort -r | \head -n 1)
     sdk use java $IDENTIFIER
   else
-    print_usage_j
+    print_usage_jdk
   fi
 }
 
@@ -255,13 +255,11 @@ function runSqlServer {
 	fi
 	contianerName="dm-sqlserver-$containerVersion"
 
-	echo ">>> Deleting running contianer: $contianerName"
-	command="$CONTAINER_RUNTIME rm -f $contianerName"
-	eval $command
+	echo ">>> Deleting running container: $contianerName"
+	docker rm -f $contianerName
 
 	echo ">>> Running SqlServer Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-sqlserver:$containerVersion"
-	command="$CONTAINER_RUNTIME run -d --name $contianerName --platform linux/amd64 -p 1433:1433 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-sqlserver:$containerVersion"
-	eval $command
+	docker run -d --name $contianerName --platform linux/amd64 -p 1433:1433 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-sqlserver:$containerVersion
 }
 
 # Postgres Docker
@@ -273,13 +271,11 @@ function runPostgresServer {
 	fi
 	contianerName="dm-postgres-$containerVersion"
 
-	echo ">>> Deleting running contianer: $contianerName"
-	command="$CONTAINER_RUNTIME rm -f $contianerName"
-	eval $command
+	echo ">>> Deleting running container: $contianerName"
+	docker rm -f $contianerName
 
 	echo ">>> Running Postgres Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-postgres:$containerVersion"
-	command="$CONTAINER_RUNTIME run -d --name $contianerName -p 5432:5432 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-postgres:$containerVersion"
-	eval $command
+	docker run -d --name $contianerName -p 5432:5432 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-postgres:$containerVersion
 }
 
 # Apache ArtemisMQ Docker
@@ -291,13 +287,11 @@ function runArtemis {
 	fi
 	contianerName="dm-mq-$containerVersion"
 	
-	echo ">>> Deleting running contianer: $contianerName"
-	command="$CONTAINER_RUNTIME rm -f $contianerName"
-	eval $command
+	echo ">>> Deleting running container: $contianerName"
+	docker rm -f $contianerName
 
 	echo ">>> Running Artemis Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-activemq-artemis:$containerVersion"
-	command="$CONTAINER_RUNTIME run -d --name $contianerName -p 8161:8161 -p 61616:61616 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-activemq-artemis:$containerVersion"
-	eval $command
+	docker run -d --name $contianerName -p 8161:8161 -p 61616:61616 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-activemq-artemis:$containerVersion
 }
 
 # FitLogic Primary Container - Cloud Version
@@ -309,17 +303,15 @@ function runCloudFitLogic {
 	fi
 	contianerName="dm-smarts-$containerVersion"
 	
-	echo ">>> Deleting running contianer: $contianerName"
-	command="$CONTAINER_RUNTIME rm -f $contianerName"
-	eval $command
+	echo ">>> Deleting running container: $contianerName"
+	docker rm -f $contianerName
 
 	echo ">>> Running Fit Logic Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
-	command="$CONTAINER_RUNTIME run -d --name $contianerName \
+	docker run -d --name $contianerName \
 		-p 443:8443 \
 		--env-file $HOME/debtmanager/fs/tenant1/dmfs/smarts.env.settings \
 		-v $HOME/debtmanager/fs/tenant1/dmfs/fl_init_repo:/var/opt/sl/data \
-		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
-	eval $command
+		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion
 }
 
 # FitLogic Primary Container - OnPrem Version
@@ -331,7 +323,7 @@ function runOnPremFitLogicPrimary {
 	fi
 	contianerName="fl-onprem-primary"
 	
-	echo ">>> Deleting running contianer: $contianerName"
+	echo ">>> Deleting running container: $contianerName"
 	docker rm -f $contianerName
 
 	echo ">>> Running Fit Logic Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
@@ -351,7 +343,7 @@ function runOnPremFitLogicFileContainer {
 	fi
 	contianerName="fl-onprem-file-instance1"
 	
-	echo ">>> Deleting running contianer: $contianerName"
+	echo ">>> Deleting running container: $contianerName"
 	docker rm -f $contianerName
 
 	echo ">>> Running Fit Logic Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
@@ -371,20 +363,18 @@ function runDmRest {
 	fi
 	contianerName="dm-rest-$containerVersion"
 
-	echo ">>> Deleting running contianer: $contianerName"
-	command="$CONTAINER_RUNTIME rm -f $contianerName"
-	eval $command
+	echo ">>> Deleting running container: $contianerName"
+	docker rm -f $contianerName
 
 	echo ">>> Running dm-rest-services Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-rest-services:$containerVersion"
-	command="$CONTAINER_RUNTIME run --name $contianerName \
+	docker run --name $contianerName \
 		-p 8080:8080 \
 		-e dbhost=host.docker.internal -e dbport=5432 \
 		-e mqhost=host.docker.internal -e mqport=61616 \
 		-e tadb=dm_tenant_admin -e tadbuser=tenantadmin -e tadbpassword=P@55w0rd \
 		-e nodename=dm -e debug=false \
 		-v $HOME/debtmanager/fs:/usr/local/dm \
-		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-rest-services:$containerVersion"
-	eval $command
+		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-rest-services:$containerVersion
 }
 
 function listEcrImages {

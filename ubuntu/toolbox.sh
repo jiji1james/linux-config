@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Install some helper prerequisites
-sudo apt install -y nautilus firefox
+# Install Chrome
+./chrome.sh
 
 mkdir -p ~/.jetbrains/software
 
