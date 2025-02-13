@@ -166,7 +166,7 @@ function setDmEnvironment {
 	fi
 
 	# Set Java Home
-	j 8
+	jdk 8
 }
 
 # Set Container Runtime
