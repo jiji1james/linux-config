@@ -26,7 +26,7 @@ echo "SUSE    : $IS_SUSE"
 
 if $IS_UBUNTU; then
   sudo apt install -y nala
-  sudo nala install -y bash zsh eza zip unzip git stow dos2unix fd-find zsh-syntax-highlighting zsh-autosuggestions
+  sudo nala install -y bash zsh eza zip unzip git ripgrip dos2unix fd-find zsh-syntax-highlighting zsh-autosuggestions
 fi
 
 mkdir -p ~/github
@@ -35,11 +35,27 @@ mkdir -p ~/github
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
 
 # Install fzf
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/github/fzf
-~/github/fzf/install
+FZF_VERSION=$(curl -s "https://api.github.com/repos/junegunn/fzf/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
+curl -Lo fzf.tar.gz "https://github.com/junegunn/fzf/releases/download/v${FZF_VERSION}/fzf-${FZF_VERSION}-linux_amd64.tar.gz"  
+tar xf fzf.tar.gz -C $HOME/.local/bin
+rm -rf fzf.tar.gz
 
 # Install oh-my-posh
 curl -sS https://ohmyposh.dev/install.sh | sh
+
+# Install lazygit
+LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
+curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+tar xf lazygit.tar.gz lazygit
+sudo install lazygit -D -t $HOME/.local/bin
+rm -rf lazygit*
+
+# Install neovim
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+sudo rm -rf /opt/nvim
+sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+rm -rf nvim-linux-x86_64.tar.gz
+ln -s /opt/nvim-linux-x86_64/bin/nvim $HOME/.local/bin/nvim
 
 # Add Zscalar certs
 echo ""

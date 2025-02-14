@@ -25,24 +25,6 @@ echo "UBUNTU  : $IS_UBUNTU"
 echo "FEDORA  : $IS_FEDORA"
 echo "SUSE    : $IS_SUSE"
 
-# Install neovim
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
-sudo rm -rf /opt/nvim
-sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
-rm -rf nvim-linux-x86_64.tar.gz
-ln -s /opt/nvim-linux-x86_64/bin/nvim ~$HOME/.local/bin/nvim
-
-if $IS_UBUNTU; then
-  sudo nala install -y ripgrip
-fi
-
-# Install lazygit
-LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
-curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
-tar xf lazygit.tar.gz lazygit
-sudo install lazygit -D -t /usr/local/bin/
-rm -rf lazygit*
-
 # Install AWS CLI
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
@@ -52,7 +34,6 @@ rm -rf ./aws ./awscliv2.zip
 # Install SDKMAN
 curl -s "https://get.sdkman.io" | bash
 source $HOME/.sdkman/bin/sdkman-init.sh
-
 
 # Function to find and install a specific Java version
 sdkman_install_java() {

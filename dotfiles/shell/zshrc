@@ -25,7 +25,7 @@ alias ls="eza --icons=always"
 eval "$(zoxide init zsh)"
 
 # FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
 
 # Use fd instead of fzf to ignore .git folders
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
