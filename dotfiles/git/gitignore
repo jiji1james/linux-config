@@ -1,0 +1,6 @@
+.DS_Store
+.idea
+.vscode
+.vscode-server
+.vscode-test
+.vscode-test-server

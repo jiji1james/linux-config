@@ -1,0 +1,69 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+"               ██╗   ██╗██╗███╗   ███╗██████╗  ██████╗
+"               ██║   ██║██║████╗ ████║██╔══██╗██╔════╝
+"               ██║   ██║██║██╔████╔██║██████╔╝██║
+"               ╚██╗ ██╔╝██║██║╚██╔╝██║██╔══██╗██║
+"                ╚████╔╝ ██║██║ ╚═╝ ██║██║  ██║╚██████╗
+"                 ╚═══╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Configure leader key
+let mapleader = ","
+
+""" Common VIM settings ------------------
+set number
+" set relativenumber
+set showmode
+
+""" Idea specific settings ------------------
+" https://raw.githubusercontent.com/wiki/JetBrains/ideavim/set-commands.md
+set ideajoin
+" set ideastatusicon=gray
+set ideamarks
+set ideaput
+set showmode
+
+""" IdeaVim development stuff ------------------
+set ideastrictmode
+
+""" Easy motion plugin ------------------
+Plug 'easymotion/vim-easymotion'
+" https://github.com/AlexPl292/IdeaVim-EasyMotion#supported-commands
+" enable <leader>s{char}{char} to search
+map <leader>s <Plug>(easymotion-s)
+
+""" Vim Commentary plugin ------------------
+Plug 'tpope/vim-commentary'
+" gcc: Comment current line.
+" gc + motion: Comment using the motion.
+" gc: Comment selected text.
+
+""" Highlighted Yank plugin ------------------
+" https://freedium.cfd/https://betterprogramming.pub/the-essential-ideavim-plugins-f939b4325180
+Plug 'machakann/vim-highlightedyank'
+
+""" Easy Align plugin ------------------
+" https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+if has('ide')
+  " mappings and options that exist only in IdeaVim
+  map <leader>f <Action>(GotoFile)
+  map <leader>r <Action>(ReplaceInPath)
+  map <leader>g <Action>(FindInPath)
+  map <leader>b <Action>(Switcher)
+
+  if &ide =~? 'intellij idea'
+    if &ide =~? 'community'
+      " some mappings and options for IntelliJ IDEA Community Edition
+    elseif &ide =~? 'ultimate'
+      " some mappings and options for IntelliJ IDEA Ultimate Edition
+    endif
+  endif
+endif
+

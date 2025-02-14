@@ -15,10 +15,10 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
-# ls aliases
-# alias ls='ls -hF --color=auto --time-style=long-iso --group-directories-first'
-alias ls='exa --icons -F -H --group-directories-first --git -1'
-alias ll='ls -laF'
+# ls aliases using eza
+alias ls='eza --icons -G -F -H --group-directories-first --git'
+alias ll='eza --icons -a -l -F -H --group-directories-first --git'
+alias lt='eza -TL 2'
 
 # Liven up the console for common commands
 alias grep='grep --color'

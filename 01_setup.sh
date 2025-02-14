@@ -26,8 +26,20 @@ echo "SUSE    : $IS_SUSE"
 
 if $IS_UBUNTU; then
   sudo apt install -y nala
-  nala install -y eza zip unzip git stow dos2unix
+  sudo nala install -y bash zsh eza zip unzip git stow dos2unix fd-find zsh-syntax-highlighting zsh-autosuggestions
 fi
+
+mkdir -p ~/github
+
+# Install zoxide
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+
+# Install fzf
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/github/fzf
+~/github/fzf/install
+
+# Install oh-my-posh
+curl -sS https://ohmyposh.dev/install.sh | sh
 
 # Add Zscalar certs
 echo ""
