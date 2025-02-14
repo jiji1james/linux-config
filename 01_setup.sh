@@ -26,7 +26,7 @@ echo "SUSE    : $IS_SUSE"
 
 if $IS_UBUNTU; then
   sudo apt install -y nala
-  sudo nala install -y bash zsh eza zip unzip git ripgrip dos2unix fd-find zsh-syntax-highlighting zsh-autosuggestions
+  sudo nala install -y bash zsh eza zip unzip git ripgrep dos2unix fd-find zsh-syntax-highlighting zsh-autosuggestions
 fi
 
 mkdir -p ~/github
