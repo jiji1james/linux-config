@@ -30,8 +30,8 @@ read -p "Checkout Callout Services (Y/N): " coscheckout
 read -p "Checkout Communicator (Y/N): " commcheckout
 read -p "Checkout Batch Process Orchestator (Y/N): " bpocheckout
 read -p "Checkout Debt Manager for Cloud (Y/N): " cloudcheckout
-read -p "Checkout Debt Manager for 13.0 (Y/N): " dm13checkout
-read -p "Checkout Debt Manager for 12.0 (Y/N): " dm12checkout
+read -p "Checkout Debt Manager for 13 (Y/N): " dm13checkout
+read -p "Checkout Debt Manager for 12 (Y/N): " dm12checkout
 read -p "Checkout Debt Manager Runtime Tools (Y/N): " toolscheckout
 read -p "Checkout Debt Manager Libraries (Y/N): " libcheckout
 read -p "Checkout Debt Manager Tenant Admin (Y/N): " tacheckout
@@ -63,40 +63,40 @@ fi
 echo ""
 if [[ "$cloudcheckout" == "Y" || "$cloudcheckout" == "y" ]]; then
   echo ">>> Checkout Debt Manager Cloud Code"
-  mkdir -p $HOME/debtmanager/cloud
-  checkoutGitRepository crsj2ee $HOME/debtmanager/cloud
-  checkoutGitRepository browser-client $HOME/debtmanager/cloud
-  checkoutGitRepository db-postgres $HOME/debtmanager/cloud
-  checkoutGitRepository environment $HOME/debtmanager/cloud
-  checkoutGitRepository etl $HOME/debtmanager/cloud
-  checkoutGitRepository reports $HOME/debtmanager/cloud
-  checkoutGitRepository configuration-management $HOME/debtmanager/cloud
+  mkdir -p $HOME/debtmanager/cloud/code
+  checkoutGitRepository crsj2ee $HOME/debtmanager/cloud/code
+  checkoutGitRepository browser-client $HOME/debtmanager/cloud/code
+  checkoutGitRepository db-postgres $HOME/debtmanager/cloud/code
+  checkoutGitRepository environment $HOME/debtmanager/cloud/code
+  checkoutGitRepository etl $HOME/debtmanager/cloud/code
+  checkoutGitRepository reports $HOME/debtmanager/cloud/code
+  checkoutGitRepository configuration-management $HOME/debtmanager/cloud/code
 fi
 
 echo ""
 if [[ "$dm13checkout" == "Y" || "$dm13checkout" == "y" ]]; then
-  echo ">>> Checkout Debt Manager OnPrem 13.0 Code"
-  mkdir -p $HOME/debtmanager/onprem/13.0/code
-  checkoutGitRepository crsj2ee $HOME/debtmanager/onprem/13.0/code
-  checkoutGitRepository browser-client $HOME/debtmanager/onprem/13.0/code
-  checkoutGitRepository environment $HOME/debtmanager/onprem/13.0/code
-  checkoutGitRepository configuration-management $HOME/debtmanager/onprem/13.0/code
-  checkoutGitRepository db-sqlserver $HOME/debtmanager/onprem/13.0/code
+  echo ">>> Checkout Debt Manager OnPrem 13 Code"
+  mkdir -p $HOME/debtmanager/onprem/13/code
+  checkoutGitRepository crsj2ee $HOME/debtmanager/onprem/13/code
+  checkoutGitRepository browser-client $HOME/debtmanager/onprem/13/code
+  checkoutGitRepository environment $HOME/debtmanager/onprem/13/code
+  checkoutGitRepository configuration-management $HOME/debtmanager/onprem/13/code
+  checkoutGitRepository db-sqlserver $HOME/debtmanager/onprem/13/code
 
-  checkoutGitRepository dm-jboss $HOME/debtmanager/onprem/13.0
+  checkoutGitRepository dm-jboss $HOME/debtmanager/onprem/13
 fi
 
 echo ""
 if [[ "$dm12checkout" == "Y" || "$dm12checkout" == "y" ]]; then
-  echo ">>> Checkout Debt Manager OnPrem 12.0 Code"
-  mkdir -p $HOME/debtmanager/onprem/12.0/code
-  checkoutGitRepository crsj2ee $HOME/debtmanager/onprem/12.0/code
-  checkoutGitRepository browser-client $HOME/debtmanager/onprem/12.0/code
-  checkoutGitRepository environment $HOME/debtmanager/onprem/12.0/code
-  checkoutGitRepository configuration-management $HOME/debtmanager/onprem/12.0/code
-  checkoutGitRepository db-sqlserver $HOME/debtmanager/onprem/12.0/code
+  echo ">>> Checkout Debt Manager OnPrem 12 Code"
+  mkdir -p $HOME/debtmanager/onprem/12/code
+  checkoutGitRepository crsj2ee $HOME/debtmanager/onprem/12/code
+  checkoutGitRepository browser-client $HOME/debtmanager/onprem/12/code
+  checkoutGitRepository environment $HOME/debtmanager/onprem/12/code
+  checkoutGitRepository configuration-management $HOME/debtmanager/onprem/12/code
+  checkoutGitRepository db-sqlserver $HOME/debtmanager/onprem/12/code
 
-  checkoutGitRepository dm-jboss $HOME/debtmanager/onprem/12.0
+  checkoutGitRepository dm-jboss $HOME/debtmanager/onprem/12
 fi
 
 echo ""

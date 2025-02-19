@@ -330,8 +330,24 @@ function runOnPremFitLogicPrimary {
 	docker run -d --name $contianerName \
 		-p 443:8443 \
 		--env-file $DM_HOME/fs/dflttnt/dmfs/fitlogic/smarts.env.settings \
-		-v $DM_HOME/fs/dflttnt/dmfs/fitlogic/repo:/var/opt/sl/data \
 		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion
+}
+
+function loadFitLogicInitalRepo {
+	contianerName=$1
+	if [[ -z $contianerName ]]
+	then
+		contianerName="fl-onprem-primary"
+	fi
+	
+	echo ">>> Download Initial Repo"
+	wget -nv http://nexus.infra.crsdev.com:8081/repository/dm-releases/com/crs/dm/fitlogic/Fitlogic-InitialRepo-OnPrem/1.0.0/Fitlogic-InitialRepo-OnPrem-1.0.0.zip -P $HOME
+
+	sleep 20
+	echo ">>> Import Inital Repo"
+	docker cp $HOME/Fitlogic-InitialRepo-OnPrem-1.0.0.zip $contianerName:/opt/sl/Fitlogic-InitialRepo-OnPrem-1.0.0.zip
+	docker exec $contianerName sladmin repository --import /opt/sl/Fitlogic-InitialRepo-OnPrem-1.0.0.zip
+	rm -f $HOME/Fitlogic-InitialRepo-OnPrem-1.0.0.zip
 }
 
 # FitLogic File Container - OnPrem Version
