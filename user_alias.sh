@@ -46,5 +46,7 @@ alias tomcat='cd $TOMCAT_HOME'
 alias jboss='cd $JBOSS_HOME'
 
 alias toolbox="~/.jetbrains/jetbrains-toolbox/jetbrains-toolbox > /dev/null 2>&1 &"
-alias ideac="~/.local/share/JetBrains/Toolbox/apps/intellij-idea-community-edition/bin/idea > /dev/null 2>&1 &"
+# alias ideac="~/.local/share/JetBrains/Toolbox/apps/intellij-idea-community-edition/bin/idea > /dev/null 2>&1 &"
 alias ideau="~/.jetbrains/ideau/bin/idea > /dev/null 2>&1 &"
+alias ideac="~/.jetbrains/ideac/bin/idea > /dev/null 2>&1 &"
+

@@ -26,7 +26,14 @@ echo "SUSE    : $IS_SUSE"
 
 if $IS_UBUNTU; then
   sudo apt install -y nala
-  sudo nala install -y bash zsh eza zip unzip git ripgrep dos2unix fd-find zsh-syntax-highlighting zsh-autosuggestions
+  sudo nala install -y bash zsh eza zip unzip git ripgrep dos2unix tmux fd-find zsh-syntax-highlighting zsh-autosuggestions
+  sudo add-apt-repository ppa:aos1/diff-so-fancy
+  sudo apt update
+  sudo nala install -y diff-so-fancy
+elif $IS_FEDORA; then
+  sudo dnf install -y bash zsh eza zip unzip git ripgrep dos2unix tmux fd-find diff-so-fancy zsh-syntax-highlighting zsh-autosuggestions
+elif $IS_SUSE; then
+  sudo zypper install -y bash zsh eza zip unzip git ripgrep dos2unix tmux fd-find zsh-syntax-highlighting zsh-autosuggestions
 fi
 
 mkdir -p ~/github
@@ -41,7 +48,7 @@ tar xf fzf.tar.gz -C $HOME/.local/bin
 rm -rf fzf.tar.gz
 
 # Install oh-my-posh
-curl -sS https://ohmyposh.dev/install.sh | sh
+curl -s https://ohmyposh.dev/install.sh | bash -s
 
 # Install lazygit
 LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')

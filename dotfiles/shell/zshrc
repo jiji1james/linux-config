@@ -53,6 +53,6 @@ source $HOME/linux-config/user_alias.sh
 source $HOME/linux-config/user_functions.sh
 
 # Configure oh my posh
-# eval "$(oh-my-posh init zsh --config $HOME/.cache/oh-my-posh/themes/pure.omp.json)"
+eval "$(oh-my-posh init zsh --config $HOME/.cache/oh-my-posh/themes/pure.omp.json)"
 # oh-my-posh config export --output ~/linux-config/dotfiles/shell/theme.omp.json
-eval "$(oh-my-posh init zsh --config $HOME/linux-config/dotfiles/shell/theme.omp.json)"
+# eval "$(oh-my-posh init zsh --config $HOME/linux-config/dotfiles/shell/theme.omp.json)"
