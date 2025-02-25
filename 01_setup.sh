@@ -24,6 +24,7 @@ echo "UBUNTU  : $IS_UBUNTU"
 echo "FEDORA  : $IS_FEDORA"
 echo "SUSE    : $IS_SUSE"
 
+echo ">>> Installing basic software"
 if $IS_UBUNTU; then
   sudo apt install -y nala
   sudo nala install -y bash zsh eza zip unzip git ripgrep dos2unix tmux fd-find zsh-syntax-highlighting zsh-autosuggestions
@@ -37,20 +38,25 @@ elif $IS_SUSE; then
 fi
 
 mkdir -p ~/github
+mkdir -p ~/.local/bin
 
 # Install zoxide
+echo ">>> Installing zoxide"
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
 
 # Install fzf
+echo ">>> Installing fzf"
 FZF_VERSION=$(curl -s "https://api.github.com/repos/junegunn/fzf/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
 curl -Lo fzf.tar.gz "https://github.com/junegunn/fzf/releases/download/v${FZF_VERSION}/fzf-${FZF_VERSION}-linux_amd64.tar.gz"  
 tar xf fzf.tar.gz -C $HOME/.local/bin
 rm -rf fzf.tar.gz
 
 # Install oh-my-posh
+echo ">>> Installing oh-my-posh"
 curl -s https://ohmyposh.dev/install.sh | bash -s
 
 # Install lazygit
+echo ">>> Installing lazygit"
 LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
 curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
 tar xf lazygit.tar.gz lazygit
@@ -58,6 +64,7 @@ sudo install lazygit -D -t $HOME/.local/bin
 rm -rf lazygit*
 
 # Install neovim
+echo ">>> Installing neovim"
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
 sudo rm -rf /opt/nvim
 sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
