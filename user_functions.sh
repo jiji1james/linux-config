@@ -43,7 +43,11 @@ export FS_HOME="$DM_HOME/fs"
 
 # Execute Git Command Recursively in sub folders
 function rgit {
-	dirs -c				# Clear the pushd stack
+  echo "###################################################################"
+  echo ">>>>>>>>>> Executing git command: $* <<<<<<<<<<"
+  echo "###################################################################"
+
+	dirs -c             # Clear the pushd stack
 	for dir in ./*/     # list directories in the form "/tmp/dirname/"
 	do
 		dir=${dir%*/}
@@ -299,9 +303,9 @@ function runCloudFitLogic {
 	containerVersion=$1
 	if [[ -z $containerVersion ]]
 	then
-		containerVersion='vienna.8.2-ubuntu'
+		containerVersion='washington.0.0-ubuntu'
 	fi
-	contianerName="dm-smarts-$containerVersion"
+	contianerName="fl-cloud"
 	
 	echo ">>> Deleting running container: $contianerName"
 	docker rm -f $contianerName
@@ -309,8 +313,7 @@ function runCloudFitLogic {
 	echo ">>> Running Fit Logic Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion"
 	docker run -d --name $contianerName \
 		-p 443:8443 \
-		--env-file $HOME/debtmanager/fs/tenant1/dmfs/smarts.env.settings \
-		-v $HOME/debtmanager/fs/tenant1/dmfs/fl_init_repo:/var/opt/sl/data \
+		--env-file $DM_HOME/fs/tenant1/dmfs/fitlogic/smarts.env.settings \
 		828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-smarts:$containerVersion
 }
 
@@ -334,20 +337,24 @@ function runOnPremFitLogicPrimary {
 }
 
 function loadFitLogicInitalRepo {
-	contianerName=$1
-	if [[ -z $contianerName ]]
-	then
-		contianerName="fl-onprem-primary"
-	fi
-	
-	echo ">>> Download Initial Repo"
-	wget -nv http://nexus.infra.crsdev.com:8081/repository/dm-releases/com/crs/dm/fitlogic/Fitlogic-InitialRepo-OnPrem/1.0.0/Fitlogic-InitialRepo-OnPrem-1.0.0.zip -P $HOME
+  if [ "$DM_VERSION" = "cloud" ]; then
+      containerName="fl-cloud"
+      downloadUrl="http://nexus.infra.crsdev.com:8081/repository/dm-releases/com/crs/dm/fitlogic/Fitlogic-Init/1.0.0.0/Fitlogic-Init-1.0.0.0.zip"
+  else
+      containerName="fl-onprem-primary"
+      downloadUrl="http://nexus.infra.crsdev.com:8081/repository/dm-releases/com/crs/dm/fitlogic/Fitlogic-InitialRepo-OnPrem/1.0.0/Fitlogic-InitialRepo-OnPrem-1.0.0.zip"
+  fi
 
-	sleep 20
-	echo ">>> Import Inital Repo"
-	docker cp $HOME/Fitlogic-InitialRepo-OnPrem-1.0.0.zip $contianerName:/opt/sl/Fitlogic-InitialRepo-OnPrem-1.0.0.zip
-	docker exec $contianerName sladmin repository --import /opt/sl/Fitlogic-InitialRepo-OnPrem-1.0.0.zip
-	rm -f $HOME/Fitlogic-InitialRepo-OnPrem-1.0.0.zip
+  echo ">>> Download Initial Repo"
+  wget -nv $downloadUrl -P $HOME
+
+  sleep 20
+
+  echo ">>> Import Inital Repo"
+  filename=$(basename $downloadUrl)
+  docker cp $HOME/$filename $containerName:/opt/sl/$filename
+  docker exec $containerName sladmin repository --import /opt/sl/$filename
+  rm -f $HOME/$filename
 }
 
 # FitLogic File Container - OnPrem Version

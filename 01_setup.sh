@@ -27,7 +27,7 @@ echo "SUSE    : $IS_SUSE"
 echo ">>> Installing basic software"
 if $IS_UBUNTU; then
   sudo apt install -y nala
-  sudo nala install -y bash zsh eza zip unzip git ripgrep dos2unix tmux fd-find zsh-syntax-highlighting zsh-autosuggestions
+  sudo nala install -y bash zsh eza zip unzip git ripgrep dos2unix tmux fd-find build-essential zsh-syntax-highlighting zsh-autosuggestions
   sudo add-apt-repository ppa:aos1/diff-so-fancy
   sudo apt update
   sudo nala install -y diff-so-fancy
