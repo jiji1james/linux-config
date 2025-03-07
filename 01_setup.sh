@@ -32,9 +32,41 @@ if $IS_UBUNTU; then
   sudo apt update
   sudo nala install -y diff-so-fancy
 elif $IS_FEDORA; then
-  sudo dnf install -y bash zsh eza zip unzip git ripgrep dos2unix tmux fd-find diff-so-fancy zsh-syntax-highlighting zsh-autosuggestions
+  sudo dnf install -y bash zsh eza zip unzip git ripgrep dos2unix tmux fd-find diff-so-fancy zsh-syntax-highlighting zsh-autosuggestions gcc
 elif $IS_SUSE; then
   sudo zypper install -y bash zsh eza zip unzip git ripgrep dos2unix tmux fd-find zsh-syntax-highlighting zsh-autosuggestions
+fi
+
+# Add Zscalar certs
+echo ""
+read -p "Configure Zscalar certificate? (Y/N): " zconfirm
+if [[ "$zconfirm" == "Y" ]] && [[ -z $winhome ]]; then
+  read -p "Windows home folder name (The name is case sensitive): " winhome
+fi
+if [[ "$zconfirm" == "Y" ]]; then
+  if $IS_UBUNTU && [[ ! -f /usr/local/share/ca-certificates/ZscalerRootCA.crt ]]; then
+    echo ">>> Handling ZScalar certificate for Ubuntu"
+    if [[ -f "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" ]]; then
+      echo ">>> Adding ZscalarRootCA to the certs"
+      sudo nala install -y ca-certificates
+      sudo cp "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" /usr/local/share/ca-certificates
+      sudo update-ca-certificates
+    fi
+  elif $IS_SUSE && [[ ! -f /usr/share/pki/trust/anchors/ZscalerRootCA.crt ]]; then
+    echo ">>> Handling ZScalar certificate for SUSE"
+    if [[ -f "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" ]]; then
+      echo ">>> Adding ZscalarRootCA to the certs"
+      sudo cp "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" /usr/share/pki/trust/anchors/ZscalerRootCA.crt
+      sudo update-ca-certificates
+    fi
+  elif $IS_FEDORA && [[ ! -f /etc/pki/ca-trust/source/anchors/ZscalerRootCA.crt ]]; then
+    echo ">>> Handling ZScalar certificate for Fedora"
+    if [[ -f "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" ]]; then
+      echo ">>> Adding ZscalarRootCA to the certs"
+      sudo cp "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" /etc/pki/ca-trust/source/anchors/ZscalerRootCA.crt
+      sudo update-ca-trust
+    fi
+  fi
 fi
 
 mkdir -p ~/github
@@ -71,34 +103,4 @@ sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 rm -rf nvim-linux-x86_64.tar.gz
 ln -s /opt/nvim-linux-x86_64/bin/nvim $HOME/.local/bin/nvim
 
-# Add Zscalar certs
-echo ""
-read -p "Configure Zscalar certificate? (Y/N): " zconfirm
-if [[ "$zconfirm" == "Y" ]] && [[ -z $winhome ]]; then
-  read -p "Windows home folder name (The name is case sensitive): " winhome
-fi
-if [[ "$zconfirm" == "Y" ]]; then
-  if $IS_UBUNTU && [[ ! -f /usr/local/share/ca-certificates/ZscalerRootCA.crt ]]; then
-    echo ">>> Handling ZScalar certificate for Ubuntu"
-    if [[ -f "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" ]]; then
-      echo ">>> Adding ZscalarRootCA to the certs"
-      sudo nala install -y ca-certificates
-      sudo cp "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" /usr/local/share/ca-certificates
-      sudo update-ca-certificates
-    fi
-  elif $IS_SUSE && [[ ! -f /usr/share/pki/trust/anchors/ZscalerRootCA.crt ]]; then
-    echo ">>> Handling ZScalar certificate for SUSE"
-    if [[ -f "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" ]]; then
-      echo ">>> Adding ZscalarRootCA to the certs"
-      sudo cp "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" /usr/share/pki/trust/anchors/ZscalerRootCA.crt
-      sudo update-ca-certificates
-    fi
-  elif $IS_FEDORA && [[ ! -f /etc/pki/ca-trust/source/anchors/ZscalerRootCA.crt ]]; then
-    echo ">>> Handling ZScalar certificate for Fedora"
-    if [[ -f "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" ]]; then
-      echo ">>> Adding ZscalarRootCA to the certs"
-      sudo cp "/mnt/c/Users/$winhome/OneDrive - C&R Software/Computer_Setup/zscalar/ZscalerRootCA.crt" /etc/pki/ca-trust/source/anchors/ZscalerRootCA.crt
-      sudo update-ca-trust
-    fi
-  fi
-fi
+
