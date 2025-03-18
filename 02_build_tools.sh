@@ -25,15 +25,25 @@ echo "UBUNTU  : $IS_UBUNTU"
 echo "FEDORA  : $IS_FEDORA"
 echo "SUSE    : $IS_SUSE"
 
-# Install AWS CLI
-curl -s "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip -q awscliv2.zip
-sudo ./aws/install
-rm -rf ./aws ./awscliv2.zip
+# Install AWS CLI if not already installed
+if ! command -v aws &> /dev/null; then
+    echo "Installing AWS CLI..."
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    unzip -q awscliv2.zip
+    sudo ./aws/install
+    rm -rf ./aws ./awscliv2.zip
+else
+    echo "AWS CLI is already installed"
+fi
 
 # Install SDKMAN
-curl -s "https://get.sdkman.io" | bash
-source $HOME/.sdkman/bin/sdkman-init.sh
+if ! command -v sdk &> /dev/null; then
+    echo "Installing SDKMAN..."
+    curl -s "https://get.sdkman.io" | bash
+    source $HOME/.sdkman/bin/sdkman-init.sh
+else
+    echo "SDKMAN is already installed"
+fi
 
 # Function to find and install a specific Java version
 sdkman_install_java() {
@@ -42,7 +52,7 @@ sdkman_install_java() {
         echo "Available versions: 8, 17, 21, etc."
         return 1
     fi
-    correttoJavaVersion=$(sdk list java | grep 8.*amzn | awk -F'|' '{ gsub(/^ +| +$/, "", $NF); print $NF }' | sort -r | head -n 1)
+    correttoJavaVersion=$(sdk list java | grep $1.*amzn | awk -F'|' '{ gsub(/^ +| +$/, "", $NF); print $NF }' | sort -r | head -n 1)
     echo ">>> Installing Corretto Java Version: $correttoJavaVersion"
     sdk install java "$correttoJavaVersion"
 }

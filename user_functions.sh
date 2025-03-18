@@ -273,7 +273,7 @@ function runPostgresServer {
 	then
 		containerVersion='develop'
 	fi
-	contianerName="dm-postgres-$containerVersion"
+	contianerName="dm-pg-$containerVersion"
 
 	echo ">>> Deleting running container: $contianerName"
 	docker rm -f $contianerName
@@ -412,4 +412,36 @@ function listEcrImages {
 	command="aws ecr describe-images --repository-name $repo_name --query 'reverse(sort_by(imageDetails,& imagePushedAt))[*]' | jq '.[:10] | .[] | select (.imageTags | .[] | contains(\"$search_text\")) | {repositoryName:.repositoryName, imageTags:.imageTags, imagePushedAt:.imagePushedAt, lastRecordedPullTime:.lastRecordedPullTime}'"
 	echo ">>> $command"
 	eval "$command"
+}
+
+# Function to add wayland to Intellij startup options
+function addWaylandToIntellij {
+    # Check if path argument is provided
+    if [ -z "$1" ]; then
+        echo "Usage: addWaylandToIntellij <path_to_idea64.vmoptions>"
+        echo "Example: addWaylandToIntellij ~/.config/JetBrains/IdeaIC2023.3/idea64.vmoptions"
+        return 1
+    fi
+
+    # Store path argument
+    vmoptions_file="$1"
+
+    # Check if file exists
+    if [ ! -f "$vmoptions_file" ]; then
+        echo "Error: File not found - $vmoptions_file"
+        return 1
+    fi
+
+    echo "Found vmoptions file at: $vmoptions_file"
+
+    # Check if WLToolkit option already exists
+    if ! grep -q "^-Dawt.toolkit.name=WLToolkit" "$vmoptions_file"; then
+        echo "Adding Wayland toolkit option..."
+        echo "-Dawt.toolkit.name=WLToolkit" >> "$vmoptions_file"
+    else
+        echo "Wayland toolkit option already exists"
+    fi
+
+    echo "Current contents of $vmoptions_file:"
+    cat "$vmoptions_file"
 }

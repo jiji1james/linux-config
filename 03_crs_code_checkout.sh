@@ -32,7 +32,6 @@ read -p "Checkout Batch Process Orchestator (Y/N): " bpocheckout
 read -p "Checkout Debt Manager for Cloud (Y/N): " cloudcheckout
 read -p "Checkout Debt Manager for 13 (Y/N): " dm13checkout
 read -p "Checkout Debt Manager for 12 (Y/N): " dm12checkout
-read -p "Checkout Debt Manager Runtime Tools (Y/N): " toolscheckout
 read -p "Checkout Debt Manager Libraries (Y/N): " libcheckout
 read -p "Checkout Debt Manager Tenant Admin (Y/N): " tacheckout
 echo "------------------------------------------------------------"
@@ -71,6 +70,9 @@ if [[ "$cloudcheckout" == "Y" || "$cloudcheckout" == "y" ]]; then
   checkoutGitRepository etl $HOME/debtmanager/cloud/code
   checkoutGitRepository reports $HOME/debtmanager/cloud/code
   checkoutGitRepository configuration-management $HOME/debtmanager/cloud/code
+
+  checkoutGitRepository dm-tomcat $HOME/debtmanager/cloud
+  checkoutGitRepository dm-activemq-artemis $HOME/debtmanager/cloud
 fi
 
 echo ""
@@ -97,14 +99,6 @@ if [[ "$dm12checkout" == "Y" || "$dm12checkout" == "y" ]]; then
   checkoutGitRepository db-sqlserver $HOME/debtmanager/onprem/12/code
 
   checkoutGitRepository dm-jboss $HOME/debtmanager/onprem/12
-fi
-
-echo ""
-if [[ "$toolscheckout" == "Y" || "$toolscheckout" == "y" ]]; then
-  echo ">>> Checkout Debt Manager Runtime Tools"
-  checkoutGitRepository dm-tomcat $HOME/debtmanager
-  checkoutGitRepository dm-jboss $HOME/debtmanager
-  checkoutGitRepository dm-activemq-artemis $HOME/debtmanager
 fi
 
 echo ""
