@@ -61,6 +61,6 @@ sdkman_install_java 8
 sdkman_install_java 17
 sdkman_install_java 21
 
-sdk install ant 1.9.15
+sdk install ant 1.10.2
 sdk install maven 3.9.6
 sdk install gradle

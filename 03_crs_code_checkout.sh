@@ -109,6 +109,7 @@ if [[ "$libcheckout" == "Y" || "$libcheckout" == "y" ]]; then
   checkoutGitRepository dm-authentication-provider $HOME/debtmanager/library
   checkoutGitRepository dm-integration-epp-img $HOME/debtmanager/library
   checkoutGitRepository dm-dev-tools $HOME/debtmanager/library
+  checkoutGitRepository rule-integration $HOME/debtmanager/library
 fi
 
 echo ""

@@ -21,6 +21,116 @@ esac
 # Figure out the arch
 unameArch="$(uname -m)"
 
+# Get color code
+function getColorCode {
+	# Default color is white if none provided
+	local color=${1:-"white"}
+	
+	# Define color codes
+	local colorCode=""
+	case "$color" in
+		"black")   colorCode="\033[30m" ;;
+		"red")     colorCode="\033[31m" ;;
+		"green")   colorCode="\033[32m" ;;
+		"yellow")  colorCode="\033[33m" ;;
+		"blue")    colorCode="\033[34m" ;;
+		"magenta") colorCode="\033[35m" ;;
+		"cyan")    colorCode="\033[36m" ;;
+		"white")   colorCode="\033[37m" ;;
+		*)         colorCode="\033[37m" ;; # Default to white
+	esac
+	
+	echo "$colorCode"
+}
+
+# Echo a message in a specified color
+function echoColor {
+	# Default message is empty if none provided
+	local message=${1:-""}
+	
+	# Default color is white if none provided
+	local color=${2:-"white"}
+	
+	# Get color code
+	local colorCode=$(getColorCode "$color")
+	
+	# Reset color code
+	local resetCode="\033[0m"
+	
+	# Print the message with color
+	echo -e "${colorCode}${message}${resetCode}"
+}
+
+# Print a line of characters that fills the width of the console
+function printLine {
+	# Default character is "-" if none provided
+	local char=${1:-"-"}
+	
+	# Default color is white if none provided
+	local color=${2:-"white"}
+	
+	# Get color code
+	local colorCode=$(getColorCode "$color")
+	
+	# Reset color code
+	local resetCode="\033[0m"
+	
+	# Get the width of the terminal
+	local width=$(tput cols)
+	
+	# Create a string of the character that fills the width
+	local line=""
+	for ((i=0; i<width; i++)); do
+		line="${line}${char}"
+	done
+	
+	# Print the line with color
+	echo -e "${colorCode}${line}${resetCode}"
+}
+
+# Print a centered string with filler characters on both sides
+function printCentered {
+	# Default string is empty if none provided
+	local text=${1:-""}
+	
+	# Default character is "-" if none provided
+	local char=${2:-"-"}
+	
+	# Default color is white if none provided
+	local color=${3:-"white"}
+	
+	# Get color code
+	local colorCode=$(getColorCode "$color")
+	
+	# Reset color code
+	local resetCode="\033[0m"
+	
+	# Get the width of the terminal
+	local width=$(tput cols)
+	
+	# Calculate padding needed on each side
+	local textLength=${#text}
+	local totalPadding=$((width - textLength))
+	local leftPadding=$((totalPadding / 2))
+	local rightPadding=$((totalPadding - leftPadding))
+	
+	# Create the left and right padding strings
+	local leftPad=""
+	local rightPad=""
+	
+	for ((i=0; i<leftPadding; i++)); do
+		leftPad="${leftPad}${char}"
+	done
+	
+	for ((i=0; i<rightPadding; i++)); do
+		rightPad="${rightPad}${char}"
+	done
+	
+	# Print the centered text with padding and color
+	echo -e "${colorCode}${leftPad}${text}${rightPad}${resetCode}"
+}
+
+
 # Print Status Block
 function printEnvironmentStatus {
 	echo "---------------------------------------"
@@ -43,16 +153,17 @@ export FS_HOME="$DM_HOME/fs"
 
 # Execute Git Command Recursively in sub folders
 function rgit {
-  echo "###################################################################"
-  echo ">>>>>>>>>> Executing git command: $* <<<<<<<<<<"
-  echo "###################################################################"
+	echo ""
+	printLine "#" "magenta"
+	printCentered "Executing git command: $*" "-" "green"
+	printLine "#" "magenta"
 
 	dirs -c             # Clear the pushd stack
 	for dir in ./*/     # list directories in the form "/tmp/dirname/"
 	do
 		dir=${dir%*/}
 		echo ""
-		echo ">>>> Working on: ${dir} <<<<"
+		printCentered ">>>> Working on: ${dir} <<<<" "-" "cyan"
 		echo ""	
 		if [ -d "${dir}/.git" ]
 		then
@@ -60,7 +171,7 @@ function rgit {
 			git $*
 			popd
 		else
-			echo "Skipping $dir"
+			echoColor "Skipping $dir" "yellow"
 		fi
 	done
 }
@@ -79,8 +190,8 @@ function gitCleanBranchesRecurse {
 	do
 		dir=${dir%*/}
 		echo ""
-		echo ">>>> Working on: ${dir} <<<<"
-		echo ""	
+		printCentered ">>>> Working on: ${dir} <<<<" "-" "cyan"
+		echo ""
 		if [ -d "${dir}/.git" ]
 		then
 			pushd $dir
