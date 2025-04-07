@@ -145,12 +145,6 @@ function printEnvironmentStatus {
 	echo "---------------------------------------"
 }
 
-# Declare variables
-export DM_HOME="$HOME/debtmanager"
-export TOMCAT_HOME="$DM_HOME/dm-tomcat/apache-tomcat"
-export JBOSS_HOME="$DM_HOME/dm-jboss/jboss-eap"
-export FS_HOME="$DM_HOME/fs"
-
 # Execute Git Command Recursively in sub folders
 function rgit {
 	echo ""
@@ -256,13 +250,14 @@ function print_usage_jdk() {
 }
 
 function jdk() {
-  if [[ $# -eq 1 ]]; then
-    VERSION_NUMBER=$1
-    IDENTIFIER=$(\ls $SDKMAN_DIR/candidates/java | \grep -v current | \grep "^$VERSION_NUMBER." | \sort -r | \head -n 1)
-    sdk use java $IDENTIFIER
-  else
-    print_usage_jdk
-  fi
+	if [[ $# -eq 1 ]]; then
+		VERSION_NUMBER=$1
+		IDENTIFIER=$(\ls $SDKMAN_DIR/candidates/java | \grep -v current | \grep "^$VERSION_NUMBER." | \sort -r | \head -n 1)
+		echo ">>> JDK set as $IDENTIFIER"
+		sdk use java $IDENTIFIER
+	else
+		print_usage_jdk
+	fi
 }
 
 # Set Debt Manager Environment
@@ -273,12 +268,19 @@ function setDmEnvironment {
 		version="cloud"
 	fi
 
+	echo ">>> Setting DM Environment to $version"
+
 	export DM_VERSION=$version
 	if [[ $version == "cloud" ]]; then
 		export DM_HOME=$HOME/debtmanager/$version
 	else
 		export DM_HOME=$HOME/debtmanager/onprem/$DM_VERSION
 	fi
+
+	# Set variables
+	export TOMCAT_HOME="$DM_HOME/dm-tomcat/apache-tomcat"
+	export JBOSS_HOME="$DM_HOME/dm-jboss/jboss-eap"
+	export FS_HOME="$DM_HOME/fs"
 
 	# Set Java Home
 	jdk 8
@@ -293,6 +295,9 @@ function setContainerRuntime {
 	fi
 
 	export CONTAINER_RUNTIME=$runtime
+	if [[ $runtime == "podman" ]]; then
+		alias docker="podman"
+	fi
 
 	echo ">>> Container runtime set as $CONTAINER_RUNTIME"
 }
@@ -311,21 +316,74 @@ function dos2unix-recurse {
 }
 
 # Kill process by keyword
-function killProcess {
-    keyword=$1
-    if [[ -z $keyword ]]; then
-        echo "Usage: killProcess <keyword>"
+function killProcess() {
+    # Check if search keywords are provided
+    if [ $# -eq 0 ]; then
+        echoColor "Usage: killProcess <keyword1> [keyword2] [keyword3] ..." "red"
         return 1
     fi
 
-    pids=$(pgrep -f $keyword)
-    if [[ -z $pids ]]; then
-        echo "No process found with keyword '$keyword'."
-        return 1
+    # Store all keywords in an array
+    local keywords=("$@")
+    local matching_pids=()
+
+    # Find processes matching all keywords
+	printLine "-" "yellow"
+	printCentered "Searching for processes matching ALL of these keywords: '${keywords[*]}'" "-" "yellow"
+	printLine "-" "yellow"
+    
+    # Get process details using ps command and filter for all keywords
+    ps aux | while read -r line; do
+        # Skip the header line and grep process itself
+        if [[ "$line" == *"USER"* ]] || [[ "$line" == *"grep"* ]]; then
+            continue
+        fi
+
+        # Check if all keywords are present in the command
+        local match=true
+        for keyword in "${keywords[@]}"; do
+            if ! echo "$line" | grep -qi "$keyword"; then
+                match=false
+                break
+            fi
+        done
+
+        if [ "$match" = true ]; then
+            pid=$(echo "$line" | awk '{print $2}')
+            user=$(echo "$line" | awk '{print $1}')
+            cpu=$(echo "$line" | awk '{print $3}')
+            mem=$(echo "$line" | awk '{print $4}')
+            cmd=$(echo "$line" | cut -d' ' -f11-)
+            
+            echo "PID: $pid"
+            echo "User: $user"
+            echo "CPU: $cpu%"
+            echo "MEM: $mem%"
+            echo "Command: $cmd"
+			printLine "-" "yellow"
+            
+            matching_pids+=("$pid")
+        fi
+    done
+
+    # If no processes found
+    if [ ${#matching_pids[@]} -eq 0 ]; then
+        echoColor "No processes found matching ALL keywords: '${keywords[*]}'" "red"
+        return 0
     fi
 
-    echo "Killing processes with keyword '$keyword': $pids"
-    kill -9 $pids
+    # Ask for confirmation before killing
+	echoColor "Do you want to kill these processes? (y/n): " "yellow"
+    read confirm
+    if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]; then
+        for pid in "${matching_pids[@]}"; do
+            echoColor "Killing process $pid..." "yellow"
+            kill -9 "$pid" 2>/dev/null
+        done
+        echoColor "Processes killed successfully" "green"
+    else
+        echoColor "Operation cancelled" "red"
+    fi
 }
 
 # Clean Tomcat
@@ -353,7 +411,7 @@ function startTomcat {
 
 # Stop Tomcat
 function stopTomcat {
-	killProcess "tomcat"
+	killProcess "java" "tomcat"
 }
 
 # Recursive dos2unix
@@ -387,10 +445,10 @@ function runPostgresServer {
 	contianerName="dm-pg-$containerVersion"
 
 	echo ">>> Deleting running container: $contianerName"
-	docker rm -f $contianerName
+	$CONTAINER_RUNTIME rm -f $contianerName
 
 	echo ">>> Running Postgres Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-postgres:$containerVersion"
-	docker run -d --name $contianerName -p 5432:5432 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-postgres:$containerVersion
+	$CONTAINER_RUNTIME run -d --name $contianerName -p 5432:5432 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-postgres:$containerVersion
 }
 
 # Apache ArtemisMQ Docker
@@ -403,10 +461,10 @@ function runArtemis {
 	contianerName="dm-mq-$containerVersion"
 	
 	echo ">>> Deleting running container: $contianerName"
-	docker rm -f $contianerName
+	$CONTAINER_RUNTIME rm -f $contianerName
 
 	echo ">>> Running Artemis Container: 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-activemq-artemis:$containerVersion"
-	docker run -d --name $contianerName -p 8161:8161 -p 61616:61616 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-activemq-artemis:$containerVersion
+	$CONTAINER_RUNTIME run -d --name $contianerName -p 8161:8161 -p 61616:61616 828586629811.dkr.ecr.us-east-1.amazonaws.com/dm-activemq-artemis:$containerVersion
 }
 
 # FitLogic Primary Container - Cloud Version
@@ -448,24 +506,24 @@ function runOnPremFitLogicPrimary {
 }
 
 function loadFitLogicInitalRepo {
-  if [ "$DM_VERSION" = "cloud" ]; then
-      containerName="fl-cloud"
-      downloadUrl="http://nexus.infra.crsdev.com:8081/repository/dm-releases/com/crs/dm/fitlogic/Fitlogic-Init/1.0.0.0/Fitlogic-Init-1.0.0.0.zip"
-  else
-      containerName="fl-onprem-primary"
-      downloadUrl="http://nexus.infra.crsdev.com:8081/repository/dm-releases/com/crs/dm/fitlogic/Fitlogic-InitialRepo-OnPrem/1.0.0/Fitlogic-InitialRepo-OnPrem-1.0.0.zip"
-  fi
+	if [ "$DM_VERSION" = "cloud" ]; then
+		containerName="fl-cloud"
+		downloadUrl="http://nexus.infra.crsdev.com:8081/repository/dm-releases/com/crs/dm/fitlogic/Fitlogic-Init/1.0.0.0/Fitlogic-Init-1.0.0.0.zip"
+	else
+		containerName="fl-onprem-primary"
+		downloadUrl="http://nexus.infra.crsdev.com:8081/repository/dm-releases/com/crs/dm/fitlogic/Fitlogic-InitialRepo-OnPrem/1.0.0/Fitlogic-InitialRepo-OnPrem-1.0.0.zip"
+	fi
 
-  echo ">>> Download Initial Repo"
-  wget -nv $downloadUrl -P $HOME
+	echo ">>> Download Initial Repo"
+	wget -nv $downloadUrl -P $HOME
 
-  sleep 20
+	sleep 20
 
-  echo ">>> Import Inital Repo"
-  filename=$(basename $downloadUrl)
-  docker cp $HOME/$filename $containerName:/opt/sl/$filename
-  docker exec $containerName sladmin repository --import /opt/sl/$filename
-  rm -f $HOME/$filename
+	echo ">>> Import Inital Repo"
+	filename=$(basename $downloadUrl)
+	docker cp $HOME/$filename $containerName:/opt/sl/$filename
+	docker exec $containerName sladmin repository --import /opt/sl/$filename
+	rm -f $HOME/$filename
 }
 
 # FitLogic File Container - OnPrem Version
@@ -556,3 +614,7 @@ function addWaylandToIntellij {
     echo "Current contents of $vmoptions_file:"
     cat "$vmoptions_file"
 }
+
+# Set Environment
+setContainerRuntime podman
+setDmEnvironment cloud
