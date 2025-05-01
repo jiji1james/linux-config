@@ -588,7 +588,7 @@ function addWaylandToIntellij {
     # Check if path argument is provided
     if [ -z "$1" ]; then
         echo "Usage: addWaylandToIntellij <path_to_idea64.vmoptions>"
-        echo "Example: addWaylandToIntellij ~/.config/JetBrains/IdeaIC2023.3/idea64.vmoptions"
+        echo "Example: addWaylandToIntellij ~/.config/JetBrains/IdeaIC2023.3/bin/idea64.vmoptions"
         return 1
     fi
 
