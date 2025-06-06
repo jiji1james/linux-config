@@ -410,7 +410,7 @@ function startTomcat {
 }
 
 # Stop Tomcat
-function stopTomcat {
+function killTomcat {
 	killProcess "java" "tomcat"
 }
 
@@ -616,5 +616,5 @@ function addWaylandToIntellij {
 }
 
 # Set Environment
-setContainerRuntime podman
+setContainerRuntime docker
 setDmEnvironment cloud

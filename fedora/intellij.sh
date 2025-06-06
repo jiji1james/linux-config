@@ -1,9 +1,28 @@
 #!/usr/bin/env bash
 
-idea_version='2024.2.3'
-use_ultimate='true'
-use_community='true'
-remove_existing='true'
+echo ">>> Please visit https://www.jetbrains.com/idea/download/other.html to find the available IntelliJ IDEA versions."
+
+read -p "Enter the IntelliJ IDEA version to install (e.g., 2025.1): " idea_version
+read -p "Install Ultimate edition? (y/n): " answer_ultimate
+if [[ "$answer_ultimate" =~ ^[Yy]$ ]]; then
+    use_ultimate='true'
+else
+    use_ultimate='false'
+fi
+
+read -p "Install Community edition? (y/n): " answer_community
+if [[ "$answer_community" =~ ^[Yy]$ ]]; then
+    use_community='true'
+else
+    use_community='false'
+fi
+
+read -p "Remove existing IntelliJ installations? (y/n): " answer_remove
+if [[ "$answer_remove" =~ ^[Yy]$ ]]; then
+    remove_existing='true'
+else
+    remove_existing='false'
+fi
 
 jetbrains_folder="$HOME/.jetbrains"
 jetbrains_software_folder="$jetbrains_folder/software"
@@ -26,8 +45,6 @@ else
         sudo dnf install -y nautilus
     fi
 fi
-
-# Find download link from https://www.jetbrains.com/idea/download/other.html
 
 if [[ "$use_ultimate" == 'true' ]]; then
     echo ">>> Installing ultimate version of Intellij $idea_version in $jetbrains_software_folder"

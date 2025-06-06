@@ -26,17 +26,20 @@ echo "SUSE    : $IS_SUSE"
 
 echo ">>> Installing basic software"
 if $IS_UBUNTU; then
+  echo ">>> Installing software in Ubuntu"
   sudo apt install -y nala
-  sudo nala install -y bash zsh eza zip unzip git ripgrep dos2unix tmux fd-find build-essential zsh-syntax-highlighting zsh-autosuggestions libfuse2
+  sudo nala install -y bash zsh zip unzip git ripgrep dos2unix tmux fd-find build-essential zsh-syntax-highlighting zsh-autosuggestions gcc wget libfuse2
   
   # Install diff-so-fancy using node
   sudo nala install -y nodejs npm
   # Install diff-so-fancy globally
   sudo npm install -g diff-so-fancy
 elif $IS_FEDORA; then
-  sudo dnf install -y bash zsh eza zip unzip git ripgrep dos2unix tmux fd-find diff-so-fancy zsh-syntax-highlighting zsh-autosuggestions gcc libfuse2
+  echo ">>> Installing software in Fedora"
+  sudo dnf install -y bash zsh zip unzip git ripgrep dos2unix tmux fd-find diff-so-fancy zsh-syntax-highlighting zsh-autosuggestions gcc wget
 elif $IS_SUSE; then
-  sudo zypper install -y bash zsh eza zip unzip git ripgrep dos2unix tmux fd-find zsh-syntax-highlighting zsh-autosuggestions gcc libfuse2
+  echo ">>> Installing software in openSUSE"
+  sudo zypper install -y bash zsh zip unzip git ripgrep dos2unix tmux fd-find zsh-syntax-highlighting zsh-autosuggestions gcc wget libfuse2
 fi
 
 mkdir -p ~/github
@@ -130,4 +133,17 @@ if ! test -f $HOME/.local/bin/nvim; then
   ln -s /opt/nvim-linux-x86_64/bin/nvim $HOME/.local/bin/nvim
 else
   echo ">>> neovim is already installed at $(command -v nvim)"
+fi
+
+# Install eza
+echo ""
+echo ">>> Checking eza installation"
+if ! command -v eza &> /dev/null; then
+  echo ">>> Installing eza"
+  curl -Lo eza.tar.gz "https://github.com/eza-community/eza/releases/download/v0.21.2/eza_x86_64-unknown-linux-gnu.tar.gz"
+  tar xf eza.tar.gz
+  sudo install eza -D -t $HOME/.local/bin
+  rm -rf eza*
+else
+  echo ">>> eza is already installed at $(command -v eza)"
 fi
